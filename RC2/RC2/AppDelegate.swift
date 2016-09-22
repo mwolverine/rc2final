@@ -21,7 +21,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         FIRApp.configure()
-
+        
+        // Health Kit Authorization and background Fetching.
+        HealthKitController.sharedController.authorizeHealthKit { (success, error) in
+            if success {
+                HealthKitController.sharedController.enableBackgroundDelivery()
+            }
+        }
+        HealthKitController.sharedController.setupQuery()
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     

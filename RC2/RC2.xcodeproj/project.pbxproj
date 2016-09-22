@@ -24,6 +24,7 @@
 		40AD2EB31D91E1BA00248833 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD2EB21D91E1BA00248833 /* Session.swift */; };
 		40AD2EB71D91EE4D00248833 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40AD2EB61D91EE4D00248833 /* GoogleService-Info.plist */; };
 		40AD2EB91D93017F00248833 /* FacebookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD2EB81D93017F00248833 /* FacebookController.swift */; };
+		FB38B8351D943C0B0013DFEA /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB38B8341D943C0B0013DFEA /* HealthKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,8 @@
 		539E225F8B0C6934D43E2389 /* Pods_RC2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RC2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9234291C7029C5EC81097699 /* Pods-RC2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RC2.release.xcconfig"; path = "Pods/Target Support Files/Pods-RC2/Pods-RC2.release.xcconfig"; sourceTree = "<group>"; };
 		EAD615DA48B75EFB4FDED67F /* Pods-RC2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RC2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RC2/Pods-RC2.debug.xcconfig"; sourceTree = "<group>"; };
+		FB38B8341D943C0B0013DFEA /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		FB38B8361D943C0B0013DFEA /* RC2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = RC2.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E91DDBC946427E56BD832B6 /* Pods_RC2.framework in Frameworks */,
+				FB38B8351D943C0B0013DFEA /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +109,7 @@
 		4003201C1D90721F0056EE64 /* RC2 */ = {
 			isa = PBXGroup;
 			children = (
+				FB38B8361D943C0B0013DFEA /* RC2.entitlements */,
 				405BF7D21D942D9C00DBD696 /* View */,
 				4003201D1D90721F0056EE64 /* AppDelegate.swift */,
 				405BF7C91D942AE900DBD696 /* ModelController */,
@@ -179,6 +184,7 @@
 		B0CEC4588DF02D7FE59743F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB38B8341D943C0B0013DFEA /* HealthKit.framework */,
 				539E225F8B0C6934D43E2389 /* Pods_RC2.framework */,
 			);
 			name = Frameworks;
@@ -237,6 +243,12 @@
 				TargetAttributes = {
 					400320191D90721F0056EE64 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = H4854S58A9;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 					4003202D1D9072200056EE64 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -469,6 +481,7 @@
 			baseConfigurationReference = EAD615DA48B75EFB4FDED67F /* Pods-RC2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RC2/RC2.entitlements;
 				INFOPLIST_FILE = RC2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ChrisYoo.RC2;
@@ -482,6 +495,7 @@
 			baseConfigurationReference = 9234291C7029C5EC81097699 /* Pods-RC2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RC2/RC2.entitlements;
 				INFOPLIST_FILE = RC2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ChrisYoo.RC2;

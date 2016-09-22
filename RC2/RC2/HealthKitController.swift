@@ -44,6 +44,8 @@ class HealthKitController {
         }
         
         let query = HKObserverQuery(sampleType: sampleType, predicate: nil, updateHandler: self.backgroundQueryHandler)
+        
+        healthKitStore.executeQuery(query)
     }
     
     func enableBackgroundDelivery(){
@@ -110,7 +112,7 @@ class HealthKitController {
     
     
     func sendResultsToFirebase(miles: Double, year: Int, month: Int, day: Int, hour: Int) {
-        
+        FacebookController.sharedController.newSessionHour(year, month: month, day: day, hour: hour, miles: miles)
     }
     
 }
