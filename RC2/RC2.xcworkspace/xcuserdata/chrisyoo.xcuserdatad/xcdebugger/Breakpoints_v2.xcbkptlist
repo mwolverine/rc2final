@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RC2/FacebookController.swift"
-            timestampString = "496188414.477266"
+            timestampString = "496271841.870372"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "addUserDetail(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RC2/FacebookController.swift"
-            timestampString = "496188414.477266"
+            timestampString = "496275557.326095"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
-            landmarkName = "newSessionHour(_:month:day:hour:miles:)"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
+            landmarkName = "createSession(_:miles:date:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -14,6 +14,7 @@
 		400320281D9072200056EE64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 400320261D9072200056EE64 /* LaunchScreen.storyboard */; };
 		400320331D9072200056EE64 /* RC2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400320321D9072200056EE64 /* RC2Tests.swift */; };
 		4003203E1D9079880056EE64 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4003203D1D9079880056EE64 /* Podfile */; };
+		402825DE1D944027001FE13A /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402825DD1D944027001FE13A /* FirebaseController.swift */; };
 		405BF7C81D942AE300DBD696 /* HealthKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BF7C71D942AE300DBD696 /* HealthKitController.swift */; };
 		405BF7CB1D942B7200DBD696 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 405BF7CA1D942B7200DBD696 /* Profile.storyboard */; };
 		405BF7CD1D942BCA00DBD696 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 405BF7CC1D942BCA00DBD696 /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 		400320341D9072200056EE64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4003203D1D9079880056EE64 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4003203F1D907B480056EE64 /* FaceBookHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FaceBookHeader.h; sourceTree = "<group>"; };
+		402825DD1D944027001FE13A /* FirebaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
 		405BF7C71D942AE300DBD696 /* HealthKitController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitController.swift; sourceTree = "<group>"; };
 		405BF7CA1D942B7200DBD696 /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		405BF7CC1D942BCA00DBD696 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			children = (
 				4003201F1D90721F0056EE64 /* LoginViewController.swift */,
 				40AD2EB81D93017F00248833 /* FacebookController.swift */,
+				402825DD1D944027001FE13A /* FirebaseController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				402825DE1D944027001FE13A /* FirebaseController.swift in Sources */,
 				40AD2EB31D91E1BA00248833 /* Session.swift in Sources */,
 				400320201D9072200056EE64 /* LoginViewController.swift in Sources */,
 				405BF7C81D942AE300DBD696 /* HealthKitController.swift in Sources */,

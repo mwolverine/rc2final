@@ -19,6 +19,7 @@ class FacebookController {
     static let sharedController = FacebookController()
     let firebaseURL = FIRDatabase.database().referenceFromURL("https://rc2p-15dd8.firebaseio.com/")
     
+    
     //FIREBASE FACEBOOK: Integration with Firebase through authentication from Facebook
     
     func facebookCredential() {
@@ -46,18 +47,18 @@ class FacebookController {
                         self.uid = user.uid as String
                         let usersReference = self.firebaseURL.child("users/\(self.uid)")
                         
-                        usersReference.child("UserInfo").updateChildValues(newUser) { (err, ref) in
+                        usersReference.updateChildValues(newUser) { (err, ref) in
                             if err != nil {
                                 print(err)
                                 return
                             }
                             print("saved successful in firebase database")
                         }
-                        
+
                         self.returnMyData()
                         self.returnFriendListData()
-                        self.createSession()
-                        self.newSessionHour(2015, month: 6, day: 5, hour: 6, miles: 500)
+                        self.createSession(String(50), miles: String(50), date: NSDate())
+//                        self.pullFriendsMilesData()
                     }
                 })
             }
@@ -85,7 +86,16 @@ class FacebookController {
                     
                     let detailedUser = ["fID": fID, "firstName": firstName, "lastName": lastName, "gender": gender]
                     
+                    //Add Facebook User Detail into facebookUser
+                    let facebookUserAuthID = ["\(fID)": "\(self.uid)"]
+                    let facebookUsersReference = self.firebaseURL.child("facebookUser")
+                    facebookUsersReference.updateChildValues(facebookUserAuthID)
+                    
+                    //Add user deatil
                     self.addUserDetail(detailedUser)
+                    
+                    
+                    
                     
                 }
             })
@@ -93,11 +103,12 @@ class FacebookController {
         
     }
     
+    
     // FIREBASE adds detailed user information to Firebase from Facebook
     func addUserDetail(detailedUser: [String: AnyObject]){
         let usersReference = self.firebaseURL.child("users/\(self.uid)")
         
-        usersReference.child("UserInfo").updateChildValues(detailedUser, withCompletionBlock: { (err, ref) in
+        usersReference.updateChildValues(detailedUser, withCompletionBlock: { (err, ref) in
             if err != nil {
                 print(err)
                 return
@@ -117,7 +128,7 @@ class FacebookController {
             else
             {
                 let resultdict = result as! NSDictionary
-                print("Result Dict: \(resultdict)")
+//                print("Result Dict: \(resultdict)")
                 
                 let data : NSArray = resultdict.objectForKey("data") as! NSArray
                 
@@ -131,6 +142,8 @@ class FacebookController {
                     self.createFriend("\(id)", friendName: "\(name)")
                     
                 }
+
+              
                 
                 let friends = resultdict.objectForKey("data") as! NSArray
                 print("Found \(friends.count) friends")
@@ -150,7 +163,7 @@ class FacebookController {
         
         let friendsInfo = [friendID: friendName]
         
-        usersReference.child("FriendList").updateChildValues(friendsInfo, withCompletionBlock: { (err, ref) in
+        usersReference.child("friendList").updateChildValues(friendsInfo, withCompletionBlock: { (err, ref) in
             if err != nil {
                 print(err)
                 return
@@ -158,10 +171,28 @@ class FacebookController {
         })
     }
     
-    func createSession() {
-        let sessionInfo = ["Total Time" : 2016]
-        let usersReference = firebaseURL.child("users/\(uid)")
-        usersReference.child("Session").child("Year").child("Month").child("Day").child("Hour").updateChildValues(sessionInfo, withCompletionBlock: { (error, ref) in
+
+    func createSession(steps: String, miles: String, date: NSDate) {
+        
+//        let dateFormatter: NSDateFormatter = {
+//            let formatter = NSDateFormatter()
+//            formatter.dateStyle = .ShortStyle
+//            formatter.timeStyle = .NoStyle
+//            formatter.doesRelativeDateFormatting = true
+//            return formatter
+//        }()
+//        
+//        let stringDate = dateFormatter.stringFromDate(date)
+        
+        let stringDate = String(date)
+        
+        let firebaseTime = date.timeIntervalSince1970 * 1000
+
+        let sessionInfo = ["steps" : steps, "miles": miles, "date": "\(firebaseTime)"]
+
+        let sessionReference = firebaseURL.child("session")
+        
+        sessionReference.child("\(uid)").child("days").child("\(stringDate)").updateChildValues(sessionInfo, withCompletionBlock: { (error, ref) in
             if error != nil {
                 print(error)
                 return
@@ -169,12 +200,40 @@ class FacebookController {
         })
     }
     
-    func newSessionHour (year: Int, month: Int, day: Int, hour: Int, miles: Double) {
-        let hourlyMiles = ["Miles" : "\(miles)"]
-
-        
-        let usersReference = firebaseURL.child("users/\(uid)").child("Session").child("\(year)").child("\(month)").child("\(day)")
-        usersReference.child("\(hour)").updateChildValues(hourlyMiles)
-        
+//    func newSessionHour (year: Int, month: Int, day: Int, hour: Int, miles: Double) {
+//        let hourlyMiles = ["Miles" : "\(miles)"]
+//        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+//
+//        
+//        let usersReference = firebaseURL.child("users/\(fireBaseID)").child("Session").child("\(year)").child("\(month)").child("\(day)")
+//        usersReference.child("\(hour)").updateChildValues(hourlyMiles)
+//        
     }
-}
+    
+    //    var firebaseDataReference: FIRDatabaseReference!
+//    var firebaseHandle: UInt!
+    
+//    func pullFriendsMilesData () {
+//        
+//        var friendIdArray: [String] = []
+//        //grab FID of User
+//        firebaseURL.child("users").child(fireBaseID).child("FriendList").observeEventType(.Value, withBlock: {(snapshot) in
+//            let friendIdDict = snapshot.value as? [String: String]
+//            for (key, value) in friendIdDict! {
+//                friendIdArray.append(key)
+//                
+//                print("\(key)")
+//                print("\(value)")
+//            }
+//            print(friendIdDict)
+//        })
+//        
+//        //Go into each UID and get miles
+//        
+//        //accessing miles of the current user with FIR UID
+//        firebaseURL.child("users").child(fireBaseID).child("Session").observeEventType(.Value, withBlock: {(snapshot) in
+//            let totalMiles = snapshot.value!["totalMiles"] as? Int
+//            print(totalMiles)
+//        })
+//    }
+//}
