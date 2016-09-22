@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RC2/FacebookController.swift"
-            timestampString = "496256227.639237"
+            timestampString = "496271841.870372"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "addUserDetail(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,76 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RC2/FacebookController.swift"
-            timestampString = "496265315.416197"
+            timestampString = "496274790.982818"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
-            landmarkName = "pullFriendsMilesData()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RC2/FacebookController.swift"
-            timestampString = "496265315.416197"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
-            landmarkName = "pullFriendsMilesData()"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RC2.FacebookController.pullFriendsMilesData () -&gt; ()"
-                  moduleName = "RC2"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chrisyoo/Desktop/DevMountain/RC2%20Final/RC2/RC2/FacebookController.swift"
-                  timestampString = "496265679.769045"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "205"
-                  endingLineNumber = "205"
-                  offsetFromSymbolStart = "976">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RC2.FacebookController.(pullFriendsMilesData () -&gt; ()).(closure #2)"
-                  moduleName = "RC2"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chrisyoo/Desktop/DevMountain/RC2%20Final/RC2/RC2/FacebookController.swift"
-                  timestampString = "496265679.769181"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "205"
-                  endingLineNumber = "205"
-                  offsetFromSymbolStart = "794">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RC2/FacebookController.swift"
-            timestampString = "496265679.246132"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
-            landmarkName = "pullFriendsMilesData()"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
+            landmarkName = "createSession(_:miles:date:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
