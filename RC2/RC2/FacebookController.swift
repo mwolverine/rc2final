@@ -18,6 +18,8 @@ class FacebookController {
     var uid: String = ""
     static let sharedController = FacebookController()
     let firebaseURL = FIRDatabase.database().referenceFromURL("https://rc2p-15dd8.firebaseio.com/")
+    let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+    
     
     //FIREBASE FACEBOOK: Integration with Firebase through authentication from Facebook
     
@@ -58,6 +60,7 @@ class FacebookController {
                         self.returnFriendListData()
                         self.createSession()
                         self.newSessionHour(2015, month: 6, day: 5, hour: 6, miles: 500)
+                        self.pullFriendsMilesData()
                     }
                 })
             }
@@ -117,7 +120,7 @@ class FacebookController {
             else
             {
                 let resultdict = result as! NSDictionary
-                print("Result Dict: \(resultdict)")
+//                print("Result Dict: \(resultdict)")
                 
                 let data : NSArray = resultdict.objectForKey("data") as! NSArray
                 
@@ -171,10 +174,42 @@ class FacebookController {
     
     func newSessionHour (year: Int, month: Int, day: Int, hour: Int, miles: Double) {
         let hourlyMiles = ["Miles" : "\(miles)"]
-
         
-        let usersReference = firebaseURL.child("users/\(uid)").child("Session").child("\(year)").child("\(month)").child("\(day)")
+        
+        let usersReference = firebaseURL.child("users/\(fireBaseID)").child("Session").child("\(year)").child("\(month)").child("\(day)")
         usersReference.child("\(hour)").updateChildValues(hourlyMiles)
         
+    }
+    
+    //    var firebaseDataReference: FIRDatabaseReference!
+    var firebaseHandle: UInt!
+    
+    func pullFriendsMilesData () {
+        
+        var friendIdArray: [String] = []
+        //grab FID of User
+        firebaseURL.child("users").child(fireBaseID).child("FriendList").observeSingleEventOfType(.Value, withBlock: {(snapshot) in
+            let friendIdDict = snapshot.value as? [String: String]
+            for (key, value) in friendIdDict! {
+                friendIdArray.append(key)
+                
+           
+                firebaseURL.queryOrderedByChild("users/").observeEventType(., withBlock: <#T##(FIRDataSnapshot) -> Void#>)
+
+               
+                
+                print("\(key)")
+                print("\(value)")
+            }
+            print(friendIdDict)
+        })
+        
+        //Go into each UID and get miles
+        
+        //accessing miles of the current user with FIR UID
+        firebaseURL.child("users").child(fireBaseID).child("Session").observeSingleEventOfType(.Value, withBlock: {(snapshot) in
+            let totalMiles = snapshot.value!["totalMiles"] as? Int
+            print(totalMiles)
+        })
     }
 }
