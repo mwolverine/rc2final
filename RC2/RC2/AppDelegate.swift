@@ -28,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 HealthKitController.sharedController.enableBackgroundDelivery()
             }
         }
-        HealthKitController.sharedController.setupQuery()
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     

@@ -15,6 +15,8 @@ class HealthKitController {
     
     static let sharedController = HealthKitController()
     
+    var lastDateSynced: NSDate = NSDate(timeInterval: -2000000, sinceDate: NSDate())
+    
     // Authorize Needs to be called before the app is loaded. Maybe View did load or app delegate
     func authorizeHealthKit(completion: ((success: Bool, error: NSError!) -> Void)?) {
         
@@ -37,7 +39,7 @@ class HealthKitController {
     }
     
     
-    func setupQuery() {
+    func setupObserverQuery() {
         
         guard let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning) else {
             return
@@ -48,6 +50,62 @@ class HealthKitController {
         healthKitStore.executeQuery(query)
     }
     
+    func setupCollectionStatisticQuery(){
+        
+        let calendar = NSCalendar.currentCalendar()
+        
+        let interval = NSDateComponents()
+        interval.day = 1
+        
+        let today = NSDate()
+        let anchorComponents = calendar.components([.Day, .Month, .Year], fromDate: today)
+        
+        guard let anchorDate = calendar.dateFromComponents(anchorComponents) else {
+            return
+        }
+        
+        guard let quantityType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning) else {
+            return
+        }
+        
+        let query = HKStatisticsCollectionQuery(quantityType: quantityType, quantitySamplePredicate: nil, options: .CumulativeSum, anchorDate: anchorDate, intervalComponents: interval)
+        
+        query.initialResultsHandler = {
+            query, results, error in
+            
+            guard let statsCollection = results else {
+                return
+            }
+            
+            let endDate = NSDate()
+            
+            let startDate = self.lastDateSynced
+            
+            statsCollection.enumerateStatisticsFromDate(startDate, toDate: endDate) { [unowned self] statistics, stop in
+                
+                let mileUnit = HKUnit.mileUnit()
+                
+                let formatter = NSLengthFormatter()
+                formatter.forPersonHeightUse = true
+                formatter.unitStyle = .Medium
+                
+                
+                if let quantity = statistics.sumQuantity() {
+                    let date = statistics.startDate
+                    let value = quantity.doubleValueForUnit(mileUnit)
+                    let components = calendar.components([.Year,.Month, .Day, .Hour, .Minute], fromDate:date)
+                    
+                    self.sendResultsToFirebase(value, date: date)
+                }
+                
+            }
+        }
+        
+        healthKitStore.executeQuery(query)
+        
+    }
+    
+    
     func enableBackgroundDelivery(){
         
         healthKitStore.enableBackgroundDeliveryForType(HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning)!, frequency: .Hourly) { (success, error) in
@@ -56,10 +114,9 @@ class HealthKitController {
                 print("There was an error enabling Background Delivery from Health App")
             } else {
                 print("The background fetches have been setup")
-                self.setupQuery()
+                self.setupObserverQuery()
             }
         }
-        
     }
     
     
@@ -99,20 +156,28 @@ class HealthKitController {
         
         if let startDate = results?.startDate {
             let components = calendar.components([.Year,.Month, .Day, .Hour, .Minute], fromDate:startDate)
-            let hours = components.hour
             let day = components.day
             let month = components.month
             let year = components.year
             
-            self.sendResultsToFirebase(totalMiles, year: year, month: month, day: day, hour: hours)
+//            self.sendResultsToFirebase(totalMiles, year: year, month: month, day: day)
         }
         
         
     }
     
     
-    func sendResultsToFirebase(miles: Double, year: Int, month: Int, day: Int, hour: Int) {
-        FacebookController.sharedController.newSessionHour(year, month: month, day: day, hour: hour, miles: miles)
+    func sendResultsToFirebase(miles: Double, date: NSDate) {
+        print(date)
+        print(miles)
+        
+        let dateFormatter: NSDateFormatter = {
+            let formatter = NSDateFormatter()
+            formatter.dateStyle = .ShortStyle
+            formatter.timeStyle = .
+            formatter.doesRelativeDateFormatting = true
+            return formatter
+        }()
     }
     
 }
