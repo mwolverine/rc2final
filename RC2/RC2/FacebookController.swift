@@ -171,22 +171,28 @@ class FacebookController {
         })
     }
     
+
     func createSession(steps: String, miles: String, date: NSDate) {
         
-//        let query = firebaseURL.child("session").child(uid).child("days").queryOrderedByChild("date").queryStartingAtValue("date converted to firebase time you want to start with")
- 
-
-//        let date = NSDate()
-//        let userLastOnlineRef = FIRDatabase.database().referenceWithPath("session/\(uid)\(dateString)")
-//        let firebaseTime = userLastOnlineRef.onDisconnectSetValue(FIRServerValue.timestamp())
+//        let dateFormatter: NSDateFormatter = {
+//            let formatter = NSDateFormatter()
+//            formatter.dateStyle = .ShortStyle
+//            formatter.timeStyle = .NoStyle
+//            formatter.doesRelativeDateFormatting = true
+//            return formatter
+//        }()
+//        
+//        let stringDate = dateFormatter.stringFromDate(date)
+        
+        let stringDate = String(date)
+        
         let firebaseTime = date.timeIntervalSince1970 * 1000
-//        let stringFirebaseTime = String(firebaseTime)
 
         let sessionInfo = ["steps" : steps, "miles": miles, "date": "\(firebaseTime)"]
 
         let sessionReference = firebaseURL.child("session")
         
-        sessionReference.child("\(uid)").child("days").child("\(date)").updateChildValues(sessionInfo, withCompletionBlock: { (error, ref) in
+        sessionReference.child("\(uid)").child("days").child("\(stringDate)").updateChildValues(sessionInfo, withCompletionBlock: { (error, ref) in
             if error != nil {
                 print(error)
                 return
