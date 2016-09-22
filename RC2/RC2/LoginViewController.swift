@@ -40,7 +40,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             loginView.readPermissions = ["public_profile", "email", "user_friends"]
             loginView.delegate = self
         }
-        HealthKitController.sharedController.setupCollectionStatisticQuery()
         return
     }
     

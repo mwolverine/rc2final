@@ -171,13 +171,7 @@ class HealthKitController {
         print(date)
         print(miles)
         
-        let dateFormatter: NSDateFormatter = {
-            let formatter = NSDateFormatter()
-            formatter.dateStyle = .ShortStyle
-            formatter.timeStyle = .
-            formatter.doesRelativeDateFormatting = true
-            return formatter
-        }()
+        FacebookController.sharedController.createSession("0", miles: String(miles), date: date)
     }
     
 }

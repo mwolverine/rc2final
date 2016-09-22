@@ -15,7 +15,8 @@ import FirebaseAuth
 class FacebookController {
     
     var friendData: [String] = []
-    var uid: String = ""
+    //temp id placed for testing
+    var uid: String = "3liA310JZGc0SBhgG2TS22nH7PD2"
     static let sharedController = FacebookController()
     let firebaseURL = FIRDatabase.database().referenceFromURL("https://rc2p-15dd8.firebaseio.com/")
     
@@ -57,7 +58,6 @@ class FacebookController {
 
                         self.returnMyData()
                         self.returnFriendListData()
-                        self.createSession(String(50), miles: String(50), date: NSDate())
 //                        self.pullFriendsMilesData()
                     }
                 })
@@ -192,6 +192,7 @@ class FacebookController {
 
         let sessionReference = firebaseURL.child("session")
         
+  
         sessionReference.child("\(uid)").child("days").child("\(stringDate)").updateChildValues(sessionInfo, withCompletionBlock: { (error, ref) in
             if error != nil {
                 print(error)

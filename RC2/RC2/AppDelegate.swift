@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         HealthKitController.sharedController.authorizeHealthKit { (success, error) in
             if success {
                 HealthKitController.sharedController.enableBackgroundDelivery()
+                HealthKitController.sharedController.setupCollectionStatisticQuery()
             }
         }
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
