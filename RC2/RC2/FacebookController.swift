@@ -15,6 +15,8 @@ import FirebaseAuth
 class FacebookController {
     
     var friendData: [String] = []
+    var friendDataArray : [Friend] = []
+
     //temp id placed for testing
     var uid: String = ""
     static let sharedController = FacebookController()
@@ -54,15 +56,21 @@ class FacebookController {
                             }
                             print("saved successful in firebase database")
                         }
-
+                        
                         self.returnMyData()
                         self.returnFriendListData()
+<<<<<<< HEAD
                         HealthKitController.sharedController.authorizeHealthKit { (success, error) in
                             if success {
                                 HealthKitController.sharedController.enableBackgroundDelivery()
                             }
                         }
 //                        self.pullFriendsMilesData()
+=======
+                        self.createSession(String(20000), miles: String(1000), date: NSDate())
+                        //                        self.pullFriendsMilesData()
+                        self.pullFriendsMilesData()
+>>>>>>> a32519bf597d293fc8788907b7ec93214275948b
                     }
                 })
             }
@@ -97,16 +105,11 @@ class FacebookController {
                     
                     //Add user deatil
                     self.addUserDetail(detailedUser)
-                    
-                    
-                    
-                    
                 }
             })
         }
         
     }
-    
     
     // FIREBASE adds detailed user information to Firebase from Facebook
     func addUserDetail(detailedUser: [String: AnyObject]){
@@ -132,7 +135,7 @@ class FacebookController {
             else
             {
                 let resultdict = result as! NSDictionary
-//                print("Result Dict: \(resultdict)")
+                //                print("Result Dict: \(resultdict)")
                 
                 let data : NSArray = resultdict.objectForKey("data") as! NSArray
                 
@@ -144,18 +147,9 @@ class FacebookController {
                     //                    print("the id value is \(id)") print("\(name)")
                     
                     self.createFriend("\(id)", friendName: "\(name)")
-                    
                 }
-
-              
-                
                 let friends = resultdict.objectForKey("data") as! NSArray
                 print("Found \(friends.count) friends")
-                
-                //Call function to add friends to friendlist - Retika
-                
-                //use the list of Facebook user id’s returned in the JSON and populate them into an array so you can compare those user id’s with the user scores in your database,
-                
             }
         })
     }
@@ -175,15 +169,18 @@ class FacebookController {
         })
     }
     
+<<<<<<< HEAD
 
     func createSessionMiles(miles: String, date: NSDate) {
+=======
+    func createSession(steps: String, miles: String, date: NSDate) {
+>>>>>>> a32519bf597d293fc8788907b7ec93214275948b
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
         print(fireBaseID)
         let date = NSDate()
         let formatter = NSDateFormatter()
         // look into mm/dd/yyyy without branches
-        formatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        formatter.timeStyle = NSDateFormatterStyle.NoStyle
+        formatter.dateFormat = "yyyy-MM-dd"
         let firebaseTime = date.timeIntervalSince1970 * 1000
         let sessionInfo = ["miles": miles, "date": "\(firebaseTime)"]
         let sessionReference = firebaseURL.child("session")
@@ -196,6 +193,7 @@ class FacebookController {
         })
     }
     
+<<<<<<< HEAD
     func createSessionSteps(steps: String, date: NSDate) {
         guard let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid) else {return}
         let formatter = NSDateFormatter()
@@ -209,10 +207,48 @@ class FacebookController {
             if error != nil {
                 print(error?.localizedDescription)
                 return
+=======
+    func pullFriendsMilesData(){
+        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        let date = NSDate()
+        let formatter = NSDateFormatter()
+        // look into mm/dd/yyyy without branches
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        //grab FID of User
+        firebaseURL.child("users").child(fireBaseID).child("friendList").observeEventType(.Value, withBlock: {(snapshot) in
+            if let friendIdDict = snapshot.value as? [String: String] {
+                for (key, _) in friendIdDict {
+                    let friendFID = key
+                    
+                    
+                    self.firebaseURL.child("facebookUser").child(friendFID).observeEventType(.Value, withBlock: {(snapshot) in
+                        if let friendUID = snapshot.value as? String {
+                            
+                            self.firebaseURL.child("session").child(friendUID).child("days").child("\(formatter.stringFromDate(date))").observeEventType(.Value, withBlock: { (snapshot) in
+                                
+                                guard let friendMiles = snapshot.value!["miles"] as? String else { return }
+                                guard let friendSteps = snapshot.value!["steps"] as? String else { return }
+                                
+                                self.firebaseURL.child("users").child(friendUID).observeEventType(.Value, withBlock: { (snapshot) in
+                                    guard let friendFirstName = snapshot.value!["firstName"] as? String else { return }
+                                    guard let friendLastName = snapshot.value!["lastName"] as? String else { return }
+                                    
+                                    let friendData = Friend(friendUID: friendUID, friendFirstName: friendFirstName, friendLastName: friendLastName, friendMiles: friendMiles, friendSteps: friendSteps)
+                                    self.friendDataArray.append(friendData)
+//                                    print(self.friendDataArray.count)
+//                                    print(self.friendDataArray)
+                                })
+                            })
+                        }
+                    })
+                }
+>>>>>>> a32519bf597d293fc8788907b7ec93214275948b
             }
         })
     }
 }
+<<<<<<< HEAD
     
     //    var firebaseDataReference: FIRDatabaseReference!
 //    var firebaseHandle: UInt!
@@ -241,3 +277,5 @@ class FacebookController {
 //        })
 //    }
 //}
+=======
+>>>>>>> a32519bf597d293fc8788907b7ec93214275948b
