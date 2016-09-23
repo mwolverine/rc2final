@@ -230,8 +230,7 @@ class FacebookController {
                                     print(friendLastName)
                                     let friendData = Friend(friendUID: friendUID, friendFirstName: friendFirstName, friendLastName: friendLastName, friendMiles: friendMiles, friendSteps: friendSteps)
                                     self.friendDataArray.append(friendData)
-                                                                       print(self.friendDataArray.count)
-                                    //                                    print(self.friendDataArray)
+                                    print(self.friendDataArray.count)
                                     self.pullUserMilesData()
 
                                 })
@@ -261,6 +260,8 @@ class FacebookController {
                 let friendData = Friend(friendUID: fireBaseID, friendFirstName: userFirstName, friendLastName: userLastName, friendMiles: userMiles, friendSteps: userSteps)
                 
                 self.friendDataArray.append(friendData)
+                print(friendData)
+                print(self.friendDataArray.count)
             })
         })
     }
