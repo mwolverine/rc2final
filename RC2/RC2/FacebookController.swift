@@ -59,9 +59,18 @@ class FacebookController {
                         
                         self.returnMyData()
                         self.returnFriendListData()
+<<<<<<< HEAD
+                        HealthKitController.sharedController.authorizeHealthKit { (success, error) in
+                            if success {
+                                HealthKitController.sharedController.enableBackgroundDelivery()
+                            }
+                        }
+//                        self.pullFriendsMilesData()
+=======
                         self.createSession(String(20000), miles: String(1000), date: NSDate())
                         //                        self.pullFriendsMilesData()
                         self.pullFriendsMilesData()
+>>>>>>> a32519bf597d293fc8788907b7ec93214275948b
                     }
                 })
             }
@@ -160,7 +169,12 @@ class FacebookController {
         })
     }
     
+<<<<<<< HEAD
+
+    func createSessionMiles(miles: String, date: NSDate) {
+=======
     func createSession(steps: String, miles: String, date: NSDate) {
+>>>>>>> a32519bf597d293fc8788907b7ec93214275948b
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
         print(fireBaseID)
         let date = NSDate()
@@ -168,7 +182,7 @@ class FacebookController {
         // look into mm/dd/yyyy without branches
         formatter.dateFormat = "yyyy-MM-dd"
         let firebaseTime = date.timeIntervalSince1970 * 1000
-        let sessionInfo = ["steps" : steps, "miles": miles, "date": "\(firebaseTime)"]
+        let sessionInfo = ["miles": miles, "date": "\(firebaseTime)"]
         let sessionReference = firebaseURL.child("session")
         
         sessionReference.child("\(uid)").child("days").child("\(formatter.stringFromDate(date))").updateChildValues(sessionInfo, withCompletionBlock: { (error, ref) in
@@ -179,6 +193,21 @@ class FacebookController {
         })
     }
     
+<<<<<<< HEAD
+    func createSessionSteps(steps: String, date: NSDate) {
+        guard let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid) else {return}
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        formatter.timeStyle = NSDateFormatterStyle.NoStyle
+        let firebaseTime = date.timeIntervalSince1970 * 1000
+        let sessionInfo = ["steps" : steps, "date": "\(firebaseTime)"]
+        let sessionReference = firebaseURL.child("session")
+        
+        sessionReference.child("\(uid)").child("days").child("\(formatter.stringFromDate(date))").updateChildValues(sessionInfo, withCompletionBlock: { (error, ref) in
+            if error != nil {
+                print(error?.localizedDescription)
+                return
+=======
     func pullFriendsMilesData(){
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
         let date = NSDate()
@@ -214,7 +243,39 @@ class FacebookController {
                         }
                     })
                 }
+>>>>>>> a32519bf597d293fc8788907b7ec93214275948b
             }
         })
     }
 }
+<<<<<<< HEAD
+    
+    //    var firebaseDataReference: FIRDatabaseReference!
+//    var firebaseHandle: UInt!
+    
+//    func pullFriendsMilesData () {
+//        
+//        var friendIdArray: [String] = []
+//        //grab FID of User
+//        firebaseURL.child("users").child(fireBaseID).child("FriendList").observeEventType(.Value, withBlock: {(snapshot) in
+//            let friendIdDict = snapshot.value as? [String: String]
+//            for (key, value) in friendIdDict! {
+//                friendIdArray.append(key)
+//                
+//                print("\(key)")
+//                print("\(value)")
+//            }
+//            print(friendIdDict)
+//        })
+//        
+//        //Go into each UID and get miles
+//        
+//        //accessing miles of the current user with FIR UID
+//        firebaseURL.child("users").child(fireBaseID).child("Session").observeEventType(.Value, withBlock: {(snapshot) in
+//            let totalMiles = snapshot.value!["totalMiles"] as? Int
+//            print(totalMiles)
+//        })
+//    }
+//}
+=======
+>>>>>>> a32519bf597d293fc8788907b7ec93214275948b
