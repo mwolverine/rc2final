@@ -57,7 +57,11 @@ class FacebookController {
 
                         self.returnMyData()
                         self.returnFriendListData()
-                        self.createSession(String(10000), miles: String(1000), date: NSDate())
+                        HealthKitController.sharedController.authorizeHealthKit { (success, error) in
+                            if success {
+                                HealthKitController.sharedController.enableBackgroundDelivery()
+                            }
+                        }
 //                        self.pullFriendsMilesData()
                     }
                 })
@@ -172,7 +176,7 @@ class FacebookController {
     }
     
 
-    func createSession(steps: String, miles: String, date: NSDate) {
+    func createSessionMiles(miles: String, date: NSDate) {
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
         print(fireBaseID)
         let date = NSDate()
@@ -181,9 +185,9 @@ class FacebookController {
         formatter.dateStyle = NSDateFormatterStyle.MediumStyle
         formatter.timeStyle = NSDateFormatterStyle.NoStyle
         let firebaseTime = date.timeIntervalSince1970 * 1000
-        let sessionInfo = ["steps" : steps, "miles": miles, "date": "\(firebaseTime)"]
+        let sessionInfo = ["miles": miles, "date": "\(firebaseTime)"]
         let sessionReference = firebaseURL.child("session")
-  
+        
         sessionReference.child("\(uid)").child("days").child("\(formatter.stringFromDate(date))").updateChildValues(sessionInfo, withCompletionBlock: { (error, ref) in
             if error != nil {
                 print(error)
@@ -192,15 +196,23 @@ class FacebookController {
         })
     }
     
-//    func newSessionHour (year: Int, month: Int, day: Int, hour: Int, miles: Double) {
-//        let hourlyMiles = ["Miles" : "\(miles)"]
-//        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
-//
-//        
-//        let usersReference = firebaseURL.child("users/\(fireBaseID)").child("Session").child("\(year)").child("\(month)").child("\(day)")
-//        usersReference.child("\(hour)").updateChildValues(hourlyMiles)
-//        
+    func createSessionSteps(steps: String, date: NSDate) {
+        guard let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid) else {return}
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        formatter.timeStyle = NSDateFormatterStyle.NoStyle
+        let firebaseTime = date.timeIntervalSince1970 * 1000
+        let sessionInfo = ["steps" : steps, "date": "\(firebaseTime)"]
+        let sessionReference = firebaseURL.child("session")
+        
+        sessionReference.child("\(uid)").child("days").child("\(formatter.stringFromDate(date))").updateChildValues(sessionInfo, withCompletionBlock: { (error, ref) in
+            if error != nil {
+                print(error?.localizedDescription)
+                return
+            }
+        })
     }
+}
     
     //    var firebaseDataReference: FIRDatabaseReference!
 //    var firebaseHandle: UInt!

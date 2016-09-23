@@ -23,12 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FIRApp.configure()
         
         // Health Kit Authorization and background Fetching.
-        HealthKitController.sharedController.authorizeHealthKit { (success, error) in
-            if success {
-                HealthKitController.sharedController.enableBackgroundDelivery()
-                HealthKitController.sharedController.setupCollectionStatisticQuery()
-            }
-        }
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
