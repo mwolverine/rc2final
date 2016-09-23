@@ -16,7 +16,7 @@ class FacebookController {
     
     var friendData: [String] = []
     //temp id placed for testing
-    var uid: String = "3liA310JZGc0SBhgG2TS22nH7PD2"
+    var uid: String = ""
     static let sharedController = FacebookController()
     let firebaseURL = FIRDatabase.database().referenceFromURL("https://rc2p-15dd8.firebaseio.com/")
     
@@ -173,11 +173,12 @@ class FacebookController {
     
 
     func createSession(steps: String, miles: String, date: NSDate) {
-        
+        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        print(fireBaseID)
         let date = NSDate()
         let formatter = NSDateFormatter()
         // look into mm/dd/yyyy without branches
-        formatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        formatter.dateStyle = NSDateFormatterStyle.MediumStyle
         formatter.timeStyle = NSDateFormatterStyle.NoStyle
         let firebaseTime = date.timeIntervalSince1970 * 1000
         let sessionInfo = ["steps" : steps, "miles": miles, "date": "\(firebaseTime)"]
