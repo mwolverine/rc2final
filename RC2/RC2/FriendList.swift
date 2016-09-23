@@ -11,12 +11,16 @@ import Foundation
 class Friend {
     
     let friendUID: String
-    let friendDisplayName: String
-    let friendMiles: Double
+    let friendFirstName: String
+    let friendLastName: String
+    let friendMiles: String
+    let friendSteps: String
     
-    init(friendUID: String, friendDisplayName: String, friendMiles: Double){
+    init(friendUID: String, friendFirstName: String, friendLastName: String, friendMiles: String, friendSteps: String){
         self.friendUID = friendUID
-        self.friendDisplayName = friendDisplayName
+        self.friendFirstName = friendFirstName
+        self.friendLastName = friendLastName
         self.friendMiles = friendMiles
+        self.friendSteps = friendSteps
     }
 }
