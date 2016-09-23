@@ -22,7 +22,6 @@
 		405BF7D11D942C0700DBD696 /* ComparingChartsView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 405BF7D01D942C0700DBD696 /* ComparingChartsView.storyboard */; };
 		40AD2EAF1D91DFA400248833 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD2EAE1D91DFA400248833 /* User.swift */; };
 		40AD2EB11D91E00000248833 /* FriendList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD2EB01D91E00000248833 /* FriendList.swift */; };
-		40AD2EB31D91E1BA00248833 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD2EB21D91E1BA00248833 /* Session.swift */; };
 		40AD2EB71D91EE4D00248833 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40AD2EB61D91EE4D00248833 /* GoogleService-Info.plist */; };
 		40AD2EB91D93017F00248833 /* FacebookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD2EB81D93017F00248833 /* FacebookController.swift */; };
 		FB38B8351D943C0B0013DFEA /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB38B8341D943C0B0013DFEA /* HealthKit.framework */; };
@@ -58,7 +57,6 @@
 		405BF7D01D942C0700DBD696 /* ComparingChartsView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ComparingChartsView.storyboard; sourceTree = "<group>"; };
 		40AD2EAE1D91DFA400248833 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		40AD2EB01D91E00000248833 /* FriendList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendList.swift; sourceTree = "<group>"; };
-		40AD2EB21D91E1BA00248833 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		40AD2EB61D91EE4D00248833 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		40AD2EB81D93017F00248833 /* FacebookController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookController.swift; sourceTree = "<group>"; };
 		539E225F8B0C6934D43E2389 /* Pods_RC2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RC2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,7 +158,6 @@
 			children = (
 				40AD2EAE1D91DFA400248833 /* User.swift */,
 				40AD2EB01D91E00000248833 /* FriendList.swift */,
-				40AD2EB21D91E1BA00248833 /* Session.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -357,7 +354,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				402825DE1D944027001FE13A /* FirebaseController.swift in Sources */,
-				40AD2EB31D91E1BA00248833 /* Session.swift in Sources */,
 				400320201D9072200056EE64 /* LoginViewController.swift in Sources */,
 				405BF7C81D942AE300DBD696 /* HealthKitController.swift in Sources */,
 				4003201E1D90721F0056EE64 /* AppDelegate.swift in Sources */,

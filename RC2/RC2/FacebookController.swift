@@ -20,7 +20,6 @@ class FacebookController {
     static let sharedController = FacebookController()
     let firebaseURL = FIRDatabase.database().referenceFromURL("https://rc2p-15dd8.firebaseio.com/")
     
-    
     //FIREBASE FACEBOOK: Integration with Firebase through authentication from Facebook
     
     func facebookCredential() {
@@ -58,6 +57,7 @@ class FacebookController {
 
                         self.returnMyData()
                         self.returnFriendListData()
+                        self.createSession(String(10000), miles: String(1000), date: NSDate())
 //                        self.pullFriendsMilesData()
                     }
                 })
@@ -174,26 +174,16 @@ class FacebookController {
 
     func createSession(steps: String, miles: String, date: NSDate) {
         
-//        let dateFormatter: NSDateFormatter = {
-//            let formatter = NSDateFormatter()
-//            formatter.dateStyle = .ShortStyle
-//            formatter.timeStyle = .NoStyle
-//            formatter.doesRelativeDateFormatting = true
-//            return formatter
-//        }()
-//        
-//        let stringDate = dateFormatter.stringFromDate(date)
-        
-        let stringDate = String(date)
-        
+        let date = NSDate()
+        let formatter = NSDateFormatter()
+        // look into mm/dd/yyyy without branches
+        formatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        formatter.timeStyle = NSDateFormatterStyle.NoStyle
         let firebaseTime = date.timeIntervalSince1970 * 1000
-
         let sessionInfo = ["steps" : steps, "miles": miles, "date": "\(firebaseTime)"]
-
         let sessionReference = firebaseURL.child("session")
-        
   
-        sessionReference.child("\(uid)").child("days").child("\(stringDate)").updateChildValues(sessionInfo, withCompletionBlock: { (error, ref) in
+        sessionReference.child("\(uid)").child("days").child("\(formatter.stringFromDate(date))").updateChildValues(sessionInfo, withCompletionBlock: { (error, ref) in
             if error != nil {
                 print(error)
                 return
