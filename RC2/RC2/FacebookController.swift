@@ -59,13 +59,15 @@ class FacebookController {
                         
                         self.returnMyData()
                         self.returnFriendListData()
+                        self.pullFriendsMilesData()
+
                         HealthKitController.sharedController.authorizeHealthKit { (success, error) in
                             if success {
                                 HealthKitController.sharedController.enableBackgroundDelivery()
                             }
                         }
                         
-                        self.pullFriendsMilesData()
+                        
                     }
                 })
             }
@@ -165,7 +167,7 @@ class FacebookController {
     
     func createSessionMiles(miles: String, date: NSDate) {
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
-//        print(fireBaseID)
+        //        print(fireBaseID)
         let date = NSDate()
         let formatter = NSDateFormatter()
         // look into mm/dd/yyyy without branches
@@ -210,31 +212,56 @@ class FacebookController {
         //grab FID of User
         firebaseURL.child("users").child(fireBaseID).child("friendList").observeEventType(.Value, withBlock: {(snapshot) in
             if let friendIdDict = snapshot.value as? [String: String] {
+                
                 for (key, _) in friendIdDict {
                     let friendFID = key
                     
                     self.firebaseURL.child("facebookUser").child(friendFID).observeEventType(.Value, withBlock: {(snapshot) in
                         if let friendUID = snapshot.value as? String {
-                            
+                            print(friendUID)
                             self.firebaseURL.child("session").child(friendUID).child("days").child("\(formatter.stringFromDate(date))").observeEventType(.Value, withBlock: { (snapshot) in
-                                
                                 guard let friendMiles = snapshot.value!["miles"] as? String else { return }
                                 guard let friendSteps = snapshot.value!["steps"] as? String else { return }
+                                print(friendMiles)
                                 
                                 self.firebaseURL.child("users").child(friendUID).observeEventType(.Value, withBlock: { (snapshot) in
                                     guard let friendFirstName = snapshot.value!["firstName"] as? String else { return }
                                     guard let friendLastName = snapshot.value!["lastName"] as? String else { return }
-                                    
+                                    print(friendLastName)
                                     let friendData = Friend(friendUID: friendUID, friendFirstName: friendFirstName, friendLastName: friendLastName, friendMiles: friendMiles, friendSteps: friendSteps)
                                     self.friendDataArray.append(friendData)
-                                    //                                    print(self.friendDataArray.count)
+                                                                       print(self.friendDataArray.count)
                                     //                                    print(self.friendDataArray)
+                                    self.pullUserMilesData()
+
                                 })
                             })
                         }
                     })
                 }
             }
+        })
+    }
+    
+    func pullUserMilesData(){
+        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        let date = NSDate()
+        let formatter = NSDateFormatter()
+        // look into mm/dd/yyyy without branches
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        firebaseURL.child("users").child(fireBaseID).observeEventType(.Value, withBlock: {(snapshot) in
+            guard let userFirstName = snapshot.value!["firstName"] as? String else { return }
+            guard let userLastName = snapshot.value!["lastName"] as? String else { return }
+            
+            self.firebaseURL.child("session").child(fireBaseID).child("days").child("\(formatter.stringFromDate(date))").observeEventType(.Value, withBlock: { (snapshot) in
+                guard let userMiles = snapshot.value!["miles"] as? String else { return }
+                guard let userSteps = snapshot.value!["steps"] as? String else { return }
+                
+                let friendData = Friend(friendUID: fireBaseID, friendFirstName: userFirstName, friendLastName: userLastName, friendMiles: userMiles, friendSteps: userSteps)
+                
+                self.friendDataArray.append(friendData)
+            })
         })
     }
 }
