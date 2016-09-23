@@ -66,14 +66,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     @IBAction func returnUserDataButtonTapped(sender: AnyObject) {
         FacebookController.sharedController.facebookCredential()
     }
-    //COPY
     
     func signedIn(user: FIRUser?) {
-        //        MeasurementHelper.sendLoginEvent()
-        //        AppState.sharedInstance.displayName = user?.displayName ?? user?.email
-        //        AppState.sharedInstance.signedIn = true
-        //        NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
-        //        performSegueWithIdentifier(Constants.Segues.SignInToFp, sender: nil)
+     
     }
 }
 

@@ -142,6 +142,8 @@
 			isa = PBXGroup;
 			children = (
 				405BF7C71D942AE300DBD696 /* HealthKitController.swift */,
+				40AD2EB81D93017F00248833 /* FacebookController.swift */,
+				402825DD1D944027001FE13A /* FirebaseController.swift */,
 			);
 			name = ModelController;
 			sourceTree = "<group>";
@@ -170,8 +172,6 @@
 			isa = PBXGroup;
 			children = (
 				4003201F1D90721F0056EE64 /* LoginViewController.swift */,
-				40AD2EB81D93017F00248833 /* FacebookController.swift */,
-				402825DD1D944027001FE13A /* FirebaseController.swift */,
 				FB35DB2E1D95C0EF0060EC72 /* IndividualTableViewCell.swift */,
 				FB35DB301D95C3610060EC72 /* RankingViewController.swift */,
 			);

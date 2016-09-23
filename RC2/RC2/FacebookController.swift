@@ -16,6 +16,7 @@ class FacebookController {
     
     var friendData: [String] = []
     var friendDataArray : [Friend] = []
+    var userData: User?
     
     //temp id placed for testing
     var uid: String = ""
@@ -60,7 +61,7 @@ class FacebookController {
                         self.returnMyData()
                         self.returnFriendListData()
                         self.pullFriendsMilesData()
-
+                        self.pullUserData()
                         HealthKitController.sharedController.authorizeHealthKit { (success, error) in
                             if success {
                                 HealthKitController.sharedController.enableBackgroundDelivery()
@@ -164,7 +165,8 @@ class FacebookController {
             }
         })
     }
-    
+    // Creates session per day on FIR from app - MILES
+
     func createSessionMiles(miles: String, date: NSDate) {
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
         //        print(fireBaseID)
@@ -184,6 +186,7 @@ class FacebookController {
         })
     }
     
+    // Creates session per day on FIR from app - STEPS
     func createSessionSteps(steps: String, date: NSDate) {
         guard let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid) else {return}
         let formatter = NSDateFormatter()
@@ -202,6 +205,9 @@ class FacebookController {
         })
     }
     
+    // Pulls user friend's data from FIR to App
+    //**DATE IS TODAY
+
     func pullFriendsMilesData(){
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
         let date = NSDate()
@@ -232,7 +238,7 @@ class FacebookController {
                                     self.friendDataArray.append(friendData)
                                     print(self.friendDataArray.count)
                                     self.pullUserMilesData()
-
+                                    
                                 })
                             })
                         }
@@ -242,6 +248,9 @@ class FacebookController {
         })
     }
     
+    // Pulls user information from FIR ...for the friendlist
+    //**DATE IS TODAY
+
     func pullUserMilesData(){
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
         let date = NSDate()
@@ -262,6 +271,33 @@ class FacebookController {
                 self.friendDataArray.append(friendData)
                 print(friendData)
                 print(self.friendDataArray.count)
+            })
+        })
+    }
+    
+    // Pulls user data from Firebase to User Model 
+    //**DATE IS TODAY
+    func pullUserData() {
+        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        let date = NSDate()
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        firebaseURL.child("users").child(fireBaseID).observeEventType(.Value, withBlock: {(snapshot) in
+            guard let userFirstName = snapshot.value!["firstName"] as? String else { return }
+            guard let userLastName = snapshot.value!["lastName"] as? String else { return }
+            guard let userEmail = snapshot.value!["email"] as? String else { return }
+            guard let userGender = snapshot.value!["gender"] as? String else { return }
+            guard let userPhotoURL = snapshot.value!["photoURL"] as? String else { return }
+            guard let userFID = snapshot.value!["fID"] as? String else { return }
+
+            
+            self.firebaseURL.child("session").child(fireBaseID).child("days").child("\(formatter.stringFromDate(date))").observeEventType(.Value, withBlock: { (snapshot) in
+                guard let userMiles = snapshot.value!["miles"] as? String else { return }
+                guard let userSteps = snapshot.value!["steps"] as? String else { return }
+                
+                let userData = User(userFirstName: userFirstName, userLastName: userLastName, userEmail: userEmail, userGender: userGender, userFID: userFID, userUID: fireBaseID, userPhotoURL: userPhotoURL, userMiles: userMiles, userSteps: userSteps)
+                print(userData.userFirstName)
             })
         })
     }
