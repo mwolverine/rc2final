@@ -1,4 +1,5 @@
 target 'RC2' do
+    pod "Charts"
     pod "FBSDKCoreKit"
     pod "FBSDKLoginKit"
     pod "FBSDKShareKit"

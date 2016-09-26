@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Charts
 
 class RankingTableViewController: UITableViewController {
     
@@ -37,6 +38,8 @@ class RankingTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("publicCell", forIndexPath: indexPath) as? IndividualTableViewCell
         
         let friend = self.rankedFriends[indexPath.row]
+        let indexPathNumber = indexPath.row + 1
+        cell?.rankNumberLabel.text = String(indexPathNumber)
         cell?.nameLabel.text = "\(friend.friendFirstName) \(friend.friendLastName)"
         cell?.milesLabel.text = "\(friend.friendMiles) miles"
         cell?.stepsLabel.text = "\(friend.friendSteps) steps"

@@ -75,8 +75,8 @@ class FacebookController {
                             HealthKitController.sharedController.setupMilesCollectionStatisticQuery()
                         HealthKitController.sharedController.setupStepsCollectionStatisticQuery()
                         }
-                        self.queryMilesPerDay()
-                        
+//                        self.queryMilesPerDay()
+                        self.queryMiles()
                     }
                 })
             }
@@ -315,6 +315,8 @@ class FacebookController {
     // finds total miles for the current user 
     func queryMiles() {
         var total = 0.00
+        self.yAxisMiles = []
+        self.xAxisDates = []
         firebaseURL.child("session").child(uid).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in
             
             if  let milesDict = snapshot.value as? [String: AnyObject] {
@@ -324,6 +326,10 @@ class FacebookController {
                         print(mile)
                         total += mile
                         print(total)
+                        self.yAxisMiles.append(mile)
+                        self.xAxisDates.append(key)
+                        print(self.xAxisDates)
+                        print(self.yAxisMiles)
                     }
                 }
             } else {
@@ -332,23 +338,20 @@ class FacebookController {
         })
     }
     
-    func queryMilesPerDay() {
-        self.yAxisMiles = []
-        self.xAxisDates = []
-        firebaseURL.child("session").child(uid).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in
-            if let milesDict = snapshot.value as? [String : AnyObject] {
-                for (key, value) in milesDict {
-                    guard let miles = value["miles"] as? String else {return}
-                    if let mile = Double(miles) {
-                        self.yAxisMiles.append(mile)
-                        self.xAxisDates.append(key)
-                        print(self.xAxisDates)
-                        print(self.yAxisMiles)
-                    }
-                }
-            }
-        })
-    }
-    
+//    func queryMilesPerDay() {
+//        self.yAxisMiles = []
+//        self.xAxisDates = []
+//        firebaseURL.child("session").child(uid).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in
+//            if let milesDict = snapshot.value as? [String : AnyObject] {
+//                for (key, value) in milesDict {
+//                    guard let miles = value["miles"] as? String else {return}
+//                    if let mile = Double(miles) {
+//                       
+//                    }
+//                }
+//            }
+//        })
+//    }
+//    
     
 }

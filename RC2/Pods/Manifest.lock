@@ -5,6 +5,9 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
+  - Charts (2.2.5):
+    - Charts/Core (= 2.2.5)
+  - Charts/Core (2.2.5)
   - FBSDKCoreKit (4.15.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.15.0):
@@ -46,6 +49,7 @@ PODS:
     - GoogleSymbolUtilities (~> 1.0)
 
 DEPENDENCIES:
+  - Charts
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
@@ -55,6 +59,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  Charts: b48fcc8d7190de910ff9e9748f5360c8ea7856e5
   FBSDKCoreKit: 6680cbd33a4243d80700f182d0af36b3fa7f3118
   FBSDKLoginKit: 96d9b70b5784490f02ab86119e542a1f182017a8
   FBSDKShareKit: 06ef20cb2f16828ca4b20055333313dd445de362
@@ -69,6 +74,6 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
 
-PODFILE CHECKSUM: 792ce45634b7bbf24ac11e3f5fbaf61a3c28c1cf
+PODFILE CHECKSUM: c55c803c1e532c3fb8ef63e487a50b74f564258b
 
 COCOAPODS: 1.0.1
