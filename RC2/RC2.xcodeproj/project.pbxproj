@@ -18,7 +18,6 @@
 		401D44611D99BC15006B404F /* RankingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401D44601D99BC15006B404F /* RankingTableViewController.swift */; };
 		402825DE1D944027001FE13A /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402825DD1D944027001FE13A /* FirebaseController.swift */; };
 		405BF7C81D942AE300DBD696 /* HealthKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BF7C71D942AE300DBD696 /* HealthKitController.swift */; };
-		405BF7CB1D942B7200DBD696 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 405BF7CA1D942B7200DBD696 /* Profile.storyboard */; };
 		405BF7CD1D942BCA00DBD696 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 405BF7CC1D942BCA00DBD696 /* Main.storyboard */; };
 		405BF7D11D942C0700DBD696 /* ComparingChartsView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 405BF7D01D942C0700DBD696 /* ComparingChartsView.storyboard */; };
 		40AD2EAF1D91DFA400248833 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD2EAE1D91DFA400248833 /* User.swift */; };
@@ -26,6 +25,8 @@
 		40AD2EB71D91EE4D00248833 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40AD2EB61D91EE4D00248833 /* GoogleService-Info.plist */; };
 		40AD2EB91D93017F00248833 /* FacebookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD2EB81D93017F00248833 /* FacebookController.swift */; };
 		4CEF812A1D9977C100CDA542 /* CompareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEF81291D9977C100CDA542 /* CompareViewController.swift */; };
+		793310A71D99CF9000E48D4F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793310A61D99CF9000E48D4F /* ProfileViewController.swift */; };
+		793310A91D99CFAE00E48D4F /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 793310A81D99CFAE00E48D4F /* Profile.storyboard */; };
 		FB35DB2F1D95C0EF0060EC72 /* IndividualTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB35DB2E1D95C0EF0060EC72 /* IndividualTableViewCell.swift */; };
 		FB38B8351D943C0B0013DFEA /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB38B8341D943C0B0013DFEA /* HealthKit.framework */; };
 /* End PBXBuildFile section */
@@ -56,7 +57,6 @@
 		401D44601D99BC15006B404F /* RankingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingTableViewController.swift; sourceTree = "<group>"; };
 		402825DD1D944027001FE13A /* FirebaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
 		405BF7C71D942AE300DBD696 /* HealthKitController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitController.swift; sourceTree = "<group>"; };
-		405BF7CA1D942B7200DBD696 /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		405BF7CC1D942BCA00DBD696 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		405BF7D01D942C0700DBD696 /* ComparingChartsView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ComparingChartsView.storyboard; sourceTree = "<group>"; };
 		40AD2EAE1D91DFA400248833 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -65,6 +65,8 @@
 		40AD2EB81D93017F00248833 /* FacebookController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookController.swift; sourceTree = "<group>"; };
 		4CEF81291D9977C100CDA542 /* CompareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompareViewController.swift; sourceTree = "<group>"; };
 		539E225F8B0C6934D43E2389 /* Pods_RC2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RC2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		793310A61D99CF9000E48D4F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		793310A81D99CFAE00E48D4F /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		9234291C7029C5EC81097699 /* Pods-RC2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RC2.release.xcconfig"; path = "Pods/Target Support Files/Pods-RC2/Pods-RC2.release.xcconfig"; sourceTree = "<group>"; };
 		EAD615DA48B75EFB4FDED67F /* Pods-RC2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RC2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RC2/Pods-RC2.debug.xcconfig"; sourceTree = "<group>"; };
 		FB35DB2E1D95C0EF0060EC72 /* IndividualTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndividualTableViewCell.swift; sourceTree = "<group>"; };
@@ -154,9 +156,9 @@
 			isa = PBXGroup;
 			children = (
 				405BF7CC1D942BCA00DBD696 /* Main.storyboard */,
+				793310A81D99CFAE00E48D4F /* Profile.storyboard */,
 				401D445E1D99BBFC006B404F /* RankingTableView.storyboard */,
 				405BF7D01D942C0700DBD696 /* ComparingChartsView.storyboard */,
-				405BF7CA1D942B7200DBD696 /* Profile.storyboard */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -174,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				4003201F1D90721F0056EE64 /* LoginViewController.swift */,
+				793310A61D99CF9000E48D4F /* ProfileViewController.swift */,
 				FB35DB2E1D95C0EF0060EC72 /* IndividualTableViewCell.swift */,
 				401D44601D99BC15006B404F /* RankingTableViewController.swift */,
 				4CEF81291D9977C100CDA542 /* CompareViewController.swift */,
@@ -290,8 +293,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				405BF7CD1D942BCA00DBD696 /* Main.storyboard in Resources */,
-				405BF7CB1D942B7200DBD696 /* Profile.storyboard in Resources */,
 				400320281D9072200056EE64 /* LaunchScreen.storyboard in Resources */,
+				793310A91D99CFAE00E48D4F /* Profile.storyboard in Resources */,
 				400320251D9072200056EE64 /* Assets.xcassets in Resources */,
 				40AD2EB71D91EE4D00248833 /* GoogleService-Info.plist in Resources */,
 				4003203E1D9079880056EE64 /* Podfile in Resources */,
@@ -368,6 +371,7 @@
 				405BF7C81D942AE300DBD696 /* HealthKitController.swift in Sources */,
 				4003201E1D90721F0056EE64 /* AppDelegate.swift in Sources */,
 				FB35DB2F1D95C0EF0060EC72 /* IndividualTableViewCell.swift in Sources */,
+				793310A71D99CF9000E48D4F /* ProfileViewController.swift in Sources */,
 				40AD2EB91D93017F00248833 /* FacebookController.swift in Sources */,
 				40AD2EAF1D91DFA400248833 /* User.swift in Sources */,
 				401D44611D99BC15006B404F /* RankingTableViewController.swift in Sources */,

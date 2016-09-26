@@ -19,7 +19,7 @@ class FacebookController {
     var userData: User?
     var xAxisDates: [String] = []
     var yAxisMiles: [Double] = []
-    
+
     //temp id placed for testing
     var uid: String = ""
     static let sharedController = FacebookController()
@@ -306,8 +306,8 @@ class FacebookController {
                 guard let userMiles = snapshot.value!["miles"] as? String else { return }
                 guard let userSteps = snapshot.value!["steps"] as? String else { return }
                 
-                let userData = User(userFirstName: userFirstName, userLastName: userLastName, userEmail: userEmail, userGender: userGender, userFID: userFID, userUID: fireBaseID, userPhotoURL: userPhotoURL, userMiles: userMiles, userSteps: userSteps)
-                print(userData.userFirstName)
+                let userInfo = User(userFirstName: userFirstName, userLastName: userLastName, userEmail: userEmail, userGender: userGender, userFID: userFID, userUID: fireBaseID, userPhotoURL: userPhotoURL, userMiles: userMiles, userSteps: userSteps)
+                self.userData = userInfo
             })
         })
     }
