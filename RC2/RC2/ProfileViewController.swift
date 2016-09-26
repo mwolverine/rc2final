@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Charts
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, ChartViewDelegate {
     
     @IBAction func update(sender: AnyObject) {
         callPullUserData()
@@ -21,6 +22,12 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var userMilesLabel: UILabel!
     @IBOutlet weak var userStepsLabel: UILabel!
     @IBOutlet weak var genderLabel: UILabel!
+    @IBOutlet weak var barChart: BarChartView!
+    
+    var dataEntries: [BarChartDataEntry] = []
+    var miles: [String] {
+        return FacebookController.sharedController.sessions.flatMap({$0.miles})
+    }
     
     
     var user: User?
@@ -29,6 +36,8 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
         self.profileImageView.clipsToBounds = true
+        barChart.delegate = self
+        setChart(, values: <#T##[Double]#>)
         
     }
     
@@ -38,6 +47,27 @@ class ProfileViewController: UIViewController {
         callPullUserData()
         
     }
+    
+        func setChart(dataPoints: [String], values: [Double]) {
+            barChart.noDataText = "Data has not been provided for charts."
+    
+            for i in 0..<dataPoints.count {
+                let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
+                dataEntries.append(dataEntry)
+            }
+    
+            let chartDataSet = BarChartDataSet(yVals: dataEntries, label: "Miles Traveled")
+            let chartData = BarChartData(xVals:miles, dataSet: chartDataSet)
+            barChart.animate(xAxisDuration: 2.5, yAxisDuration: 3.0)
+            barChart.data = chartData
+            barChart.descriptionText = ""
+    
+            chartDataSet.colors = [UIColor(red: 25/255, green: 25/255, blue: 205/255, alpha: 1)]
+        }
+    
+        func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
+            //  print("\(entry.value) in \(days[entry.xIndex])")
+        }
     
     func callPullUserData() {
         user = FacebookController.sharedController.userData
