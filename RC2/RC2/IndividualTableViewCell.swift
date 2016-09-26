@@ -27,10 +27,4 @@ class IndividualTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func updateCellWithFriendsArray(friend: Friend){
-        nameLabel.text = "\(friend.friendFirstName) \(friend.friendLastName)"
-        milesLabel.text = "\(friend.friendMiles) miles"
-        stepsLabel.text = "\(friend.friendSteps) steps"
-    }
-
 }
