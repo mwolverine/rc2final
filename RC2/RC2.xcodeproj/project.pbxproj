@@ -29,6 +29,7 @@
 		793310A91D99CFAE00E48D4F /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 793310A81D99CFAE00E48D4F /* Profile.storyboard */; };
 		FB35DB2F1D95C0EF0060EC72 /* IndividualTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB35DB2E1D95C0EF0060EC72 /* IndividualTableViewCell.swift */; };
 		FB38B8351D943C0B0013DFEA /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB38B8341D943C0B0013DFEA /* HealthKit.framework */; };
+		FB62B0511D99B3E60014E3D8 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB62B0501D99B3E60014E3D8 /* Session.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		FB35DB2E1D95C0EF0060EC72 /* IndividualTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndividualTableViewCell.swift; sourceTree = "<group>"; };
 		FB38B8341D943C0B0013DFEA /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		FB38B8361D943C0B0013DFEA /* RC2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = RC2.entitlements; sourceTree = "<group>"; };
+		FB62B0501D99B3E60014E3D8 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				40AD2EAE1D91DFA400248833 /* User.swift */,
+				FB62B0501D99B3E60014E3D8 /* Session.swift */,
 				40AD2EB01D91E00000248833 /* FriendList.swift */,
 			);
 			name = Models;
@@ -365,6 +368,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB62B0511D99B3E60014E3D8 /* Session.swift in Sources */,
 				402825DE1D944027001FE13A /* FirebaseController.swift in Sources */,
 				400320201D9072200056EE64 /* LoginViewController.swift in Sources */,
 				4CEF812A1D9977C100CDA542 /* CompareViewController.swift in Sources */,

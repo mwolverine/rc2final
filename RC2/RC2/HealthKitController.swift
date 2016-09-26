@@ -16,6 +16,7 @@ class HealthKitController {
     static let sharedController = HealthKitController()
     
     var lastDateSynced: NSDate = NSDate(timeInterval: -2000000, sinceDate: NSDate())
+    var lastLoggedTime: NSTimeInterval?
     
     
     // Authorize Needs to be called after the facebook login but before the main view
@@ -35,7 +36,7 @@ class HealthKitController {
                 print("There was an error requesting Authorization to use Health App")
             }
             if success {
-//                self.enableBackgroundDelivery()
+                //                self.enableBackgroundDelivery()
                 print("Successfully authorized Healthkit")
             }
             completion?(success: success, error: error)
@@ -46,27 +47,27 @@ class HealthKitController {
     // Setup Queries need to be in the app Delegate//
     /////////////////////////////////////////////////
     
-//    func setupMilesObserverQuery() {
-//        
-//        guard let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning) else {
-//            return
-//        }
-//        
-//        let query = HKObserverQuery(sampleType: sampleType, predicate: nil, updateHandler: self.backgroundMilesQueryHandler)
-//        
-//        healthKitStore.executeQuery(query)
-//    }
-//    
-//    func setupStepsObserverQuery() {
-//        
-//        guard let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierStepCount) else {
-//            return
-//        }
-//        
-//        let query = HKObserverQuery(sampleType: sampleType, predicate: nil, updateHandler: self.backgroundStepsQueryHandler)
-//        
-//        healthKitStore.executeQuery(query)
-//    }
+    //    func setupMilesObserverQuery() {
+    //        
+    //        guard let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning) else {
+    //            return
+    //        }
+    //        
+    //        let query = HKObserverQuery(sampleType: sampleType, predicate: nil, updateHandler: self.backgroundMilesQueryHandler)
+    //        
+    //        healthKitStore.executeQuery(query)
+    //    }
+    //    
+    //    func setupStepsObserverQuery() {
+    //        
+    //        guard let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierStepCount) else {
+    //            return
+    //        }
+    //        
+    //        let query = HKObserverQuery(sampleType: sampleType, predicate: nil, updateHandler: self.backgroundStepsQueryHandler)
+    //        
+    //        healthKitStore.executeQuery(query)
+    //    }
     
     func setupMilesCollectionStatisticQuery(){
         
@@ -102,15 +103,16 @@ class HealthKitController {
             statsCollection.enumerateStatisticsFromDate(startDate, toDate: endDate) { [unowned self] statistics, stop in
                 
                 let mileUnit = HKUnit.mileUnit()
+                let date = statistics.startDate
                 
-                
-                if let quantity = statistics.sumQuantity() {
-                    let date = statistics.startDate
-                    let value = quantity.doubleValueForUnit(mileUnit)
-                    
-                    FacebookController.sharedController.createSessionMiles("\(value)", date: date)
+                guard let quantity = statistics.sumQuantity() else {
+                    FacebookController.sharedController.createSessionMiles("0.0", date: date)
+                    return
                 }
                 
+                let value = quantity.doubleValueForUnit(mileUnit)
+                
+                FacebookController.sharedController.createSessionMiles("\(value)", date: date)
             }
         }
         
@@ -152,14 +154,16 @@ class HealthKitController {
             statsCollection.enumerateStatisticsFromDate(startDate, toDate: endDate) { [unowned self] statistics, stop in
                 
                 let stepUnit = HKUnit.countUnit()
+                let date = statistics.startDate
                 
-                if let quantity = statistics.sumQuantity() {
-                    let date = statistics.startDate
-                    let value = quantity.doubleValueForUnit(stepUnit)
-                    
-                    FacebookController.sharedController.createSessionSteps(String(value), date: date)
+                
+                guard let quantity = statistics.sumQuantity() else {
+                    FacebookController.sharedController.createSessionSteps("0.0", date: date)
+                    return
                 }
                 
+                let value = quantity.doubleValueForUnit(stepUnit)
+                FacebookController.sharedController.createSessionSteps(String(value), date: date)
             }
         }
         
@@ -167,23 +171,23 @@ class HealthKitController {
         
     }
     
-//    func enableBackgroundDelivery(){
-//        
-//        let arrayOfType = [HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning)!, HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierStepCount)!]
-//        
-//        for type in arrayOfType {
-//            healthKitStore.enableBackgroundDeliveryForType(type, frequency: .Hourly) { (success, error) in
-//                if error != nil {
-//                    print(error!.localizedDescription)
-//                    print("There was an error enabling Background Delivery from Health App")
-//                } else {
-//                    print("The background fetches have been setup")
-//                    self.setupMilesObserverQuery()
-//                    self.setupStepsObserverQuery()
-//                }
-//            }
-//        }
-//    }
+    //    func enableBackgroundDelivery(){
+    //        
+    //        let arrayOfType = [HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning)!, HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierStepCount)!]
+    //        
+    //        for type in arrayOfType {
+    //            healthKitStore.enableBackgroundDeliveryForType(type, frequency: .Hourly) { (success, error) in
+    //                if error != nil {
+    //                    print(error!.localizedDescription)
+    //                    print("There was an error enabling Background Delivery from Health App")
+    //                } else {
+    //                    print("The background fetches have been setup")
+    //                    self.setupMilesObserverQuery()
+    //                    self.setupStepsObserverQuery()
+    //                }
+    //            }
+    //        }
+    //    }
     
     
     func backgroundMilesQueryHandler(query: HKObserverQuery, completionHandler: HKObserverQueryCompletionHandler, error: NSError?) {
@@ -245,7 +249,7 @@ class HealthKitController {
         FacebookController.sharedController.createSessionMiles(String(totalMiles), date: startDate)
         
     }
-
+    
     
     func backgroundStepsResultsHandler(query: HKStatisticsQuery, results: HKStatistics?, error: NSError?) {
         
@@ -262,4 +266,19 @@ class HealthKitController {
         
         
     }
+    
+    func setLastDaysToZero(){
+        var timeIntervalSinceLastLogin = self.lastDateSynced.timeIntervalSinceNow
+        var lastLoggedDate = 1474869600.0
+        var rotatingDate = lastLoggedDate
+        repeat {
+            timeIntervalSinceLastLogin -= 86400.00
+            let date = NSDate(timeIntervalSince1970: rotatingDate).dateByAddingTimeInterval(-86400.00)
+            FacebookController.sharedController.createSessionSteps("0.0", date: date)
+            FacebookController.sharedController.createSessionMiles("0.0", date: date)
+            lastLoggedDate -= 86400.00
+        } while timeIntervalSinceLastLogin > 86400
+    }
+    
+    
 }

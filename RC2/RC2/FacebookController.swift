@@ -17,9 +17,14 @@ class FacebookController {
     var friendData: [String] = []
     var friendDataArray : [Friend] = []
     var userData: User?
-    var xAxisDates: [String] = []
-    var yAxisMiles: [Double] = []
-
+    var sessions: [Session] = [] {
+        didSet{
+            sessions.sortInPlace { (session1, session2) -> Bool in
+                session1.date < session2.date
+            }
+        }
+    }
+    
     //temp id placed for testing
     var uid: String = ""
     static let sharedController = FacebookController()
@@ -72,11 +77,11 @@ class FacebookController {
                             if success {
 //                                HealthKitController.sharedController.enableBackgroundDelivery()
                             }
+                            HealthKitController.sharedController.setLastDaysToZero()
                             HealthKitController.sharedController.setupMilesCollectionStatisticQuery()
                         HealthKitController.sharedController.setupStepsCollectionStatisticQuery()
                         }
-//                        self.queryMilesPerDay()
-                        self.queryMiles()
+                        
                     }
                 })
             }
@@ -155,6 +160,19 @@ class FacebookController {
                 }
                 let friends = resultdict.objectForKey("data") as! NSArray
                 print("Found \(friends.count) friends")
+                
+                //Test Query For Miles
+                // TODO: - Need to look into why FB wasn't logging in
+                
+                HealthKitController.sharedController.authorizeHealthKit({ (success, error) in
+                    if success {
+                        HealthKitController.sharedController.setLastDaysToZero()
+                HealthKitController.sharedController.setupMilesCollectionStatisticQuery()
+                HealthKitController.sharedController.setupStepsCollectionStatisticQuery()
+                
+                self.queryMiles()
+                    }
+                })
             }
         })
     }
@@ -306,18 +324,17 @@ class FacebookController {
                 guard let userMiles = snapshot.value!["miles"] as? String else { return }
                 guard let userSteps = snapshot.value!["steps"] as? String else { return }
                 
-                let userInfo = User(userFirstName: userFirstName, userLastName: userLastName, userEmail: userEmail, userGender: userGender, userFID: userFID, userUID: fireBaseID, userPhotoURL: userPhotoURL, userMiles: userMiles, userSteps: userSteps)
-                self.userData = userInfo
+                let userData = User(userFirstName: userFirstName, userLastName: userLastName, userEmail: userEmail, userGender: userGender, userFID: userFID, userUID: fireBaseID, userPhotoURL: userPhotoURL, userMiles: userMiles, userSteps: userSteps)
+                print(userData.userFirstName)
             })
         })
     }
     
-    // finds total miles for the current user 
+    // finds total miles and daily totals for the current user
     func queryMiles() {
+        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
         var total = 0.00
-        self.yAxisMiles = []
-        self.xAxisDates = []
-        firebaseURL.child("session").child(uid).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in
+        firebaseURL.child("session").child(fireBaseID).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in
             
             if  let milesDict = snapshot.value as? [String: AnyObject] {
                 for (key, value) in milesDict {
@@ -326,11 +343,12 @@ class FacebookController {
                         print(mile)
                         total += mile
                         print(total)
-                        self.yAxisMiles.append(mile)
-                        self.xAxisDates.append(key)
-                        print(self.xAxisDates)
-                        print(self.yAxisMiles)
                     }
+                    guard let date = value["date"] as? String else {return}
+                    guard let trueDate = Double(date) else {return}
+                    guard let steps = value["steps"] as? String else {return}
+                    let session = Session(date: trueDate, miles: miles, steps: steps)
+                    self.sessions.append(session)
                 }
             } else {
                 print("Total Miles is 0")
@@ -338,20 +356,5 @@ class FacebookController {
         })
     }
     
-//    func queryMilesPerDay() {
-//        self.yAxisMiles = []
-//        self.xAxisDates = []
-//        firebaseURL.child("session").child(uid).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in
-//            if let milesDict = snapshot.value as? [String : AnyObject] {
-//                for (key, value) in milesDict {
-//                    guard let miles = value["miles"] as? String else {return}
-//                    if let mile = Double(miles) {
-//                       
-//                    }
-//                }
-//            }
-//        })
-//    }
-//    
     
 }
