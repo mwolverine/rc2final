@@ -166,7 +166,7 @@ class FacebookController {
         })
     }
     // Creates session per day on FIR from app - MILES
-
+    
     func createSessionMiles(miles: String, date: NSDate) {
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
         //        print(fireBaseID)
@@ -207,7 +207,7 @@ class FacebookController {
     
     // Pulls user friend's data from FIR to App
     //**DATE IS TODAY
-
+    
     func pullFriendsMilesData(){
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
         let date = NSDate()
@@ -250,7 +250,7 @@ class FacebookController {
     
     // Pulls user information from FIR ...for the friendlist
     //**DATE IS TODAY
-
+    
     func pullUserMilesData(){
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
         let date = NSDate()
@@ -275,7 +275,7 @@ class FacebookController {
         })
     }
     
-    // Pulls user data from Firebase to User Model 
+    // Pulls user data from Firebase to User Model
     //**DATE IS TODAY
     func pullUserData() {
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
@@ -290,7 +290,7 @@ class FacebookController {
             guard let userGender = snapshot.value!["gender"] as? String else { return }
             guard let userPhotoURL = snapshot.value!["photoURL"] as? String else { return }
             guard let userFID = snapshot.value!["fID"] as? String else { return }
-
+            
             
             self.firebaseURL.child("session").child(fireBaseID).child("days").child("\(formatter.stringFromDate(date))").observeEventType(.Value, withBlock: { (snapshot) in
                 guard let userMiles = snapshot.value!["miles"] as? String else { return }
@@ -299,6 +299,26 @@ class FacebookController {
                 let userData = User(userFirstName: userFirstName, userLastName: userLastName, userEmail: userEmail, userGender: userGender, userFID: userFID, userUID: fireBaseID, userPhotoURL: userPhotoURL, userMiles: userMiles, userSteps: userSteps)
                 print(userData.userFirstName)
             })
+        })
+    }
+    
+    // finds total miles for the current user 
+    func queryMiles() {
+        var total = 0.00
+        firebaseURL.child("session").child(uid).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in
+            
+            if let milesDict = snapshot.value as? [String: AnyObject] {
+                for (key, value) in milesDict {
+                    guard let miles = value["miles"] as? String else { return }
+                    if let mile: Double =  Double(miles){
+                        print(mile)
+                        total += mile
+                        print(total)
+                    }
+                }
+            } else {
+                print("Total Miles is 0")
+            }
         })
     }
 }
