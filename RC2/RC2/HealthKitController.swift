@@ -17,7 +17,10 @@ class HealthKitController {
     
     var lastDateSynced: NSDate = NSDate(timeInterval: -2000000, sinceDate: NSDate())
     
-    // Authorize Needs to be called before the app is loaded. Maybe View did load or app delegate
+    
+    // Authorize Needs to be called after the facebook login but before the main view
+    /////////////////////////////////////////////////////////////////////////////////
+    
     func authorizeHealthKit(completion: ((success: Bool, error: NSError!) -> Void)?) {
         
         let healthDataToRead = Set(arrayLiteral: HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning)!, HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierStepCount)!)
@@ -32,34 +35,38 @@ class HealthKitController {
                 print("There was an error requesting Authorization to use Health App")
             }
             if success {
-                self.enableBackgroundDelivery()
+//                self.enableBackgroundDelivery()
+                print("Successfully authorized Healthkit")
             }
             completion?(success: success, error: error)
         }
     }
     
     
-    func setupMilesObserverQuery() {
-        
-        guard let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning) else {
-            return
-        }
-        
-        let query = HKObserverQuery(sampleType: sampleType, predicate: nil, updateHandler: self.backgroundMilesQueryHandler)
-        
-        healthKitStore.executeQuery(query)
-    }
+    // Setup Queries need to be in the app Delegate//
+    /////////////////////////////////////////////////
     
-    func setupStepsObserverQuery() {
-        
-        guard let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierStepCount) else {
-            return
-        }
-        
-        let query = HKObserverQuery(sampleType: sampleType, predicate: nil, updateHandler: self.backgroundStepsQueryHandler)
-        
-        healthKitStore.executeQuery(query)
-    }
+//    func setupMilesObserverQuery() {
+//        
+//        guard let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning) else {
+//            return
+//        }
+//        
+//        let query = HKObserverQuery(sampleType: sampleType, predicate: nil, updateHandler: self.backgroundMilesQueryHandler)
+//        
+//        healthKitStore.executeQuery(query)
+//    }
+//    
+//    func setupStepsObserverQuery() {
+//        
+//        guard let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierStepCount) else {
+//            return
+//        }
+//        
+//        let query = HKObserverQuery(sampleType: sampleType, predicate: nil, updateHandler: self.backgroundStepsQueryHandler)
+//        
+//        healthKitStore.executeQuery(query)
+//    }
     
     func setupMilesCollectionStatisticQuery(){
         
@@ -101,7 +108,7 @@ class HealthKitController {
                     let date = statistics.startDate
                     let value = quantity.doubleValueForUnit(mileUnit)
                     
-//                    FacebookController.sharedController.createSessionMiles("\(value)", date: date)
+                    FacebookController.sharedController.createSessionMiles("\(value)", date: date)
                 }
                 
             }
@@ -135,7 +142,7 @@ class HealthKitController {
             query, results, error in
             
             guard let statsCollection = results else {
-                return
+                fatalError("*** An error occurred while calculating the statistics: \(error?.localizedDescription) ***")
             }
             
             let endDate = NSDate()
@@ -160,23 +167,23 @@ class HealthKitController {
         
     }
     
-    func enableBackgroundDelivery(){
-        
-        let arrayOfType = [HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning)!, HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierStepCount)!]
-        
-        for type in arrayOfType {
-            healthKitStore.enableBackgroundDeliveryForType(type, frequency: .Hourly) { (success, error) in
-                if error != nil {
-                    print(error!.localizedDescription)
-                    print("There was an error enabling Background Delivery from Health App")
-                } else {
-                    print("The background fetches have been setup")
-                    self.setupMilesObserverQuery()
-                    self.setupStepsObserverQuery()
-                }
-            }
-        }
-    }
+//    func enableBackgroundDelivery(){
+//        
+//        let arrayOfType = [HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning)!, HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierStepCount)!]
+//        
+//        for type in arrayOfType {
+//            healthKitStore.enableBackgroundDeliveryForType(type, frequency: .Hourly) { (success, error) in
+//                if error != nil {
+//                    print(error!.localizedDescription)
+//                    print("There was an error enabling Background Delivery from Health App")
+//                } else {
+//                    print("The background fetches have been setup")
+//                    self.setupMilesObserverQuery()
+//                    self.setupStepsObserverQuery()
+//                }
+//            }
+//        }
+//    }
     
     
     func backgroundMilesQueryHandler(query: HKObserverQuery, completionHandler: HKObserverQueryCompletionHandler, error: NSError?) {
@@ -242,16 +249,16 @@ class HealthKitController {
     
     func backgroundStepsResultsHandler(query: HKStatisticsQuery, results: HKStatistics?, error: NSError?) {
         
-//        var totalSteps = 0.0
-//        
-//        if let value = results?.sumQuantity() {
-//            let unit = HKUnit.countUnit()
-//            totalSteps = value.doubleValueForUnit(unit)
-//        }
-//        
-//        guard let startDate = results?.startDate else {return}
-//        
-//        FacebookController.sharedController.createSessionSteps(String(totalSteps), date: startDate)
+        var totalSteps = 0.0
+        
+        if let value = results?.sumQuantity() {
+            let unit = HKUnit.countUnit()
+            totalSteps = value.doubleValueForUnit(unit)
+        }
+        
+        guard let startDate = results?.startDate else {return}
+        
+        FacebookController.sharedController.createSessionSteps(String(totalSteps), date: startDate)
         
         
     }

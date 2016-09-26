@@ -17,6 +17,8 @@ class FacebookController {
     var friendData: [String] = []
     var friendDataArray : [Friend] = []
     var userData: User?
+    var xAxisDates: [String] = []
+    var yAxisMiles: [Double] = []
     
     //temp id placed for testing
     var uid: String = ""
@@ -62,11 +64,19 @@ class FacebookController {
                         self.returnFriendListData()
                         self.pullFriendsMilesData()
                         self.pullUserData()
+                        
+                        //commented out background delivery for testing
+                        
+                        
                         HealthKitController.sharedController.authorizeHealthKit { (success, error) in
                             if success {
-                                HealthKitController.sharedController.enableBackgroundDelivery()
+//                                HealthKitController.sharedController.enableBackgroundDelivery()
                             }
+                            HealthKitController.sharedController.setupMilesCollectionStatisticQuery()
+                        HealthKitController.sharedController.setupStepsCollectionStatisticQuery()
                         }
+                        self.queryMilesPerDay()
+                        
                     }
                 })
             }
@@ -168,7 +178,6 @@ class FacebookController {
     func createSessionMiles(miles: String, date: NSDate) {
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
         //        print(fireBaseID)
-        let date = NSDate()
         let formatter = NSDateFormatter()
         // look into mm/dd/yyyy without branches
         formatter.dateFormat = "yyyy-MM-dd"
@@ -187,9 +196,12 @@ class FacebookController {
     // Creates session per day on FIR from app - STEPS
     func createSessionSteps(steps: String, date: NSDate) {
         guard let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid) else {return}
+        
         let formatter = NSDateFormatter()
-        formatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        formatter.timeStyle = NSDateFormatterStyle.NoStyle
+        // look into mm/dd/yyyy without branches
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        
         let firebaseTime = date.timeIntervalSince1970 * 1000
         let sessionInfo = ["steps" : steps, "date": "\(firebaseTime)"]
         let sessionReference = firebaseURL.child("session")
@@ -319,4 +331,24 @@ class FacebookController {
             }
         })
     }
+    
+    func queryMilesPerDay() {
+        self.yAxisMiles = []
+        self.xAxisDates = []
+        firebaseURL.child("session").child(uid).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in
+            if let milesDict = snapshot.value as? [String : AnyObject] {
+                for (key, value) in milesDict {
+                    guard let miles = value["miles"] as? String else {return}
+                    if let mile = Double(miles) {
+                        self.yAxisMiles.append(mile)
+                        self.xAxisDates.append(key)
+                        print(self.xAxisDates)
+                        print(self.yAxisMiles)
+                    }
+                }
+            }
+        })
+    }
+    
+    
 }

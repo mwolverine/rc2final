@@ -36,7 +36,7 @@ class RankingViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCellWithIdentifier("publicCell", forIndexPath: indexPath) as? IndividualTableViewCell else {
-            return IndividualTableViewCell()
+            return UITableViewCell()
         }
         
         let friend = self.rankedFriends[indexPath.row]
