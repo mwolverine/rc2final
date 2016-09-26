@@ -10,17 +10,23 @@ import UIKit
 
 class RankingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBAction func updateButton(sender: AnyObject) {
+        tableView.reloadData()
+    }
     
     @IBOutlet weak var tableView: UITableView!
     
     
-    var rankedFriends: [Friend] = FacebookController.sharedController.friendDataArray.sort { (friend1, friend2) -> Bool in
-        return friend1.friendMiles > friend2.friendMiles
+//    var rankedFriendsWrapped: [Friend] = FacebookController.sharedController.friendDataArray.sort { (friend1, friend2) -> Bool in
+//        return friend1.friendMiles > friend2.friendMiles
+//    }
+    
+    var rankedFriends: [Friend] {
+        return FacebookController.sharedController.friendDataArray
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
 
@@ -29,7 +35,9 @@ class RankingViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCellWithIdentifier("publicCell") as? IndividualTableViewCell else {return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCellWithIdentifier("publicCell", forIndexPath: indexPath) as? IndividualTableViewCell else {
+            return IndividualTableViewCell()
+        }
         
         let friend = self.rankedFriends[indexPath.row]
         cell.updateCellWithFriendsArray(friend)

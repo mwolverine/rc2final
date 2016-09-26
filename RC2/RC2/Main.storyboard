@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -50,6 +50,7 @@
                     </view>
                     <connections>
                         <outlet property="faceBookButton" destination="DOi-yf-IyJ" id="pXi-O5-la8"/>
+                        <segue destination="3aP-QT-BMH" kind="presentation" identifier="userLoggedIn" id="QCO-g1-OKI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -87,7 +88,7 @@
         <!--RankingTableView-->
         <scene sceneID="Ci0-rz-txW">
             <objects>
-                <viewControllerPlaceholder storyboardName="RankingTableView" id="0Ku-9A-Jas" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardIdentifier="rankingID" storyboardName="RankingTableView" id="0Ku-9A-Jas" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="HEw-t6-ewc"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TJp-im-ySO" userLabel="First Responder" sceneMemberID="firstResponder"/>

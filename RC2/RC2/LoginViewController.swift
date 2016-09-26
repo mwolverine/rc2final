@@ -56,6 +56,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         print("User logged in")
         
         FacebookController.sharedController.facebookCredential()
+        // segue goes here
+        self.performSegueWithIdentifier("userLoggedIn", sender: self)
     }
     
  
@@ -69,6 +71,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     func signedIn(user: FIRUser?) {
      
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "userLoggedIn" {
+            FacebookController.sharedController.pullFriendsMilesData()
+        }
     }
 }
 

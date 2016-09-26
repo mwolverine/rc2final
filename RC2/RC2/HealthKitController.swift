@@ -242,15 +242,15 @@ class HealthKitController {
     
     func backgroundStepsResultsHandler(query: HKStatisticsQuery, results: HKStatistics?, error: NSError?) {
         
-        var totalSteps = 0.0
-        
+//        var totalSteps = 0.0
+//        
 //        if let value = results?.sumQuantity() {
 //            let unit = HKUnit.countUnit()
 //            totalSteps = value.doubleValueForUnit(unit)
 //        }
-        
-        guard let startDate = results?.startDate else {return}
-        
+//        
+//        guard let startDate = results?.startDate else {return}
+//        
 //        FacebookController.sharedController.createSessionSteps(String(totalSteps), date: startDate)
         
         
