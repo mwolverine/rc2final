@@ -67,8 +67,6 @@ class FacebookController {
                                 HealthKitController.sharedController.enableBackgroundDelivery()
                             }
                         }
-                        
-                        
                     }
                 })
             }
@@ -307,7 +305,7 @@ class FacebookController {
         var total = 0.00
         firebaseURL.child("session").child(uid).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in
             
-            if let milesDict = snapshot.value as? [String: AnyObject] {
+            if  let milesDict = snapshot.value as? [String: AnyObject] {
                 for (key, value) in milesDict {
                     guard let miles = value["miles"] as? String else { return }
                     if let mile: Double =  Double(miles){
