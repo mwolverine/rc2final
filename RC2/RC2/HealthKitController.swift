@@ -158,12 +158,12 @@ class HealthKitController {
                 
                 
                 guard let quantity = statistics.sumQuantity() else {
-                    FacebookController.sharedController.createSessionSteps("0.0", date: date)
+                    FacebookController.sharedController.createSessionSteps("0", date: date)
                     return
                 }
                 
                 let value = quantity.doubleValueForUnit(stepUnit)
-                FacebookController.sharedController.createSessionSteps(String(value), date: date)
+                FacebookController.sharedController.createSessionSteps(String(Int(value)), date: date)
             }
         }
         
@@ -262,7 +262,7 @@ class HealthKitController {
         
         guard let startDate = results?.startDate else {return}
         
-        FacebookController.sharedController.createSessionSteps(String(totalSteps), date: startDate)
+        FacebookController.sharedController.createSessionSteps(String(Int(totalSteps)), date: startDate)
         
         
     }
