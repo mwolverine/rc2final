@@ -25,7 +25,6 @@ class CompareViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
     }
 
