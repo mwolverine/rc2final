@@ -112,7 +112,7 @@ class HealthKitController {
                 
                 let value = quantity.doubleValueForUnit(mileUnit)
                 
-                FacebookController.sharedController.createSessionMiles("\(value)", date: date)
+                FacebookController.sharedController.createSessionMiles(String(format: "%.2f",value), date: date)
             }
         }
         
@@ -158,12 +158,12 @@ class HealthKitController {
                 
                 
                 guard let quantity = statistics.sumQuantity() else {
-                    FacebookController.sharedController.createSessionSteps("0.0", date: date)
+                    FacebookController.sharedController.createSessionSteps("0", date: date)
                     return
                 }
                 
                 let value = quantity.doubleValueForUnit(stepUnit)
-                FacebookController.sharedController.createSessionSteps(String(value), date: date)
+                FacebookController.sharedController.createSessionSteps(String(Int(value)), date: date)
             }
         }
         
@@ -246,7 +246,7 @@ class HealthKitController {
         
         guard let startDate = results?.startDate else {return}
         
-        FacebookController.sharedController.createSessionMiles(String(totalMiles), date: startDate)
+        FacebookController.sharedController.createSessionMiles(String(format: "%.2f",totalMiles), date: startDate)
         
     }
     
@@ -262,21 +262,21 @@ class HealthKitController {
         
         guard let startDate = results?.startDate else {return}
         
-        FacebookController.sharedController.createSessionSteps(String(totalSteps), date: startDate)
+        FacebookController.sharedController.createSessionSteps(String(Int(totalSteps)), date: startDate)
         
         
     }
     
     func setLastDaysToZero(){
         var timeIntervalSinceLastLogin = self.lastDateSynced.timeIntervalSinceNow
-        var lastLoggedDate = 1474869600.0
+        var lastLoggedDate = NSCalendar.currentCalendar().startOfDayForDate(self.lastDateSynced)
         var rotatingDate = lastLoggedDate
         repeat {
             timeIntervalSinceLastLogin -= 86400.00
-            let date = NSDate(timeIntervalSince1970: rotatingDate).dateByAddingTimeInterval(-86400.00)
+            let date = rotatingDate.dateByAddingTimeInterval(-86400.00)
             FacebookController.sharedController.createSessionSteps("0.0", date: date)
             FacebookController.sharedController.createSessionMiles("0.0", date: date)
-            lastLoggedDate -= 86400.00
+            lastLoggedDate = lastLoggedDate.dateByAddingTimeInterval(-86400.00)
         } while timeIntervalSinceLastLogin > 86400
     }
     

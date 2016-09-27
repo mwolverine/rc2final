@@ -233,11 +233,14 @@ class FacebookController {
         })
     }
     
-    // Pulls user friend's data from FIR to App
+    // Pulls user friend's data 
+    //****CHANGE ID
+    //from FIR to App
     //**DATE IS TODAY
     
     func pullFriendsMilesData(){
-        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+            //(FIRAuth.auth()?.currentUser?.uid)!
         let date = NSDate()
         let formatter = NSDateFormatter()
         // look into mm/dd/yyyy without branches
@@ -297,7 +300,6 @@ class FacebookController {
                 let friendData = Friend(friendUID: fireBaseID, friendFirstName: userFirstName, friendLastName: userLastName, friendMiles: userMiles, friendSteps: userSteps)
                 
                 self.friendDataArray.append(friendData)
-                print(friendData)
                 print(self.friendDataArray.count)
             })
         })
@@ -326,6 +328,7 @@ class FacebookController {
                 
                 let userData = User(userFirstName: userFirstName, userLastName: userLastName, userEmail: userEmail, userGender: userGender, userFID: userFID, userUID: fireBaseID, userPhotoURL: userPhotoURL, userMiles: userMiles, userSteps: userSteps)
                 print(userData.userFirstName)
+                self.userData = userData
             })
         })
     }
@@ -340,14 +343,12 @@ class FacebookController {
                 for (key, value) in milesDict {
                     guard let miles = value["miles"] as? String else { return }
                     if let mile: Double =  Double(miles){
-                        print(mile)
                         total += mile
-                        print(total)
                     }
                     guard let date = value["date"] as? String else {return}
                     guard let trueDate = Double(date) else {return}
                     guard let steps = value["steps"] as? String else {return}
-                    let session = Session(date: trueDate, miles: miles, steps: steps)
+                    let session = Session(date: trueDate, formattedDate: key, miles: miles, steps: steps)
                     self.sessions.append(session)
                 }
             } else {

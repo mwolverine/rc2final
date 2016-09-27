@@ -11,11 +11,13 @@ import Foundation
 class Session {
     
     let date: Double
+    let formattedDate: String
     let miles: String
     let steps: String
     
-    init(date: Double, miles: String, steps: String){
+    init(date: Double, formattedDate: String, miles: String, steps: String){
         self.date = date
+        self.formattedDate = formattedDate
         self.miles = miles
         self.steps = steps
     }
