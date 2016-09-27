@@ -326,6 +326,7 @@ class FacebookController {
                 
                 let userData = User(userFirstName: userFirstName, userLastName: userLastName, userEmail: userEmail, userGender: userGender, userFID: userFID, userUID: fireBaseID, userPhotoURL: userPhotoURL, userMiles: userMiles, userSteps: userSteps)
                 print(userData.userFirstName)
+                self.userData = userData
             })
         })
     }
