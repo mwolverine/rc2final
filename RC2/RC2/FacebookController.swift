@@ -345,7 +345,7 @@ class FacebookController {
                     guard let date = value["date"] as? String else {return}
                     guard let trueDate = Double(date) else {return}
                     guard let steps = value["steps"] as? String else {return}
-                    let session = Session(date: trueDate, miles: miles, steps: steps)
+                    let session = Session(date: trueDate, formattedDate: key, miles: miles, steps: steps)
                     self.sessions.append(session)
                 }
             } else {

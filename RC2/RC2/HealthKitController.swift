@@ -112,7 +112,7 @@ class HealthKitController {
                 
                 let value = quantity.doubleValueForUnit(mileUnit)
                 
-                FacebookController.sharedController.createSessionMiles("\(value)", date: date)
+                FacebookController.sharedController.createSessionMiles(String(format: "%.2f",value), date: date)
             }
         }
         
@@ -246,7 +246,7 @@ class HealthKitController {
         
         guard let startDate = results?.startDate else {return}
         
-        FacebookController.sharedController.createSessionMiles(String(totalMiles), date: startDate)
+        FacebookController.sharedController.createSessionMiles(String(format: "%.2f",totalMiles), date: startDate)
         
     }
     

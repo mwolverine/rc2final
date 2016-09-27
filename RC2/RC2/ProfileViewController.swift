@@ -25,8 +25,24 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var barChart: BarChartView!
     
     var dataEntries: [BarChartDataEntry] = []
-    var miles: [String] {
-        return FacebookController.sharedController.sessions.flatMap({$0.miles})
+    var miles: [Double] {
+        var miles: [Double] = []
+        var milesArray = FacebookController.sharedController.sessions.flatMap({$0.miles})
+        for mile in milesArray {
+            miles.append(Double(mile)!)
+        }
+        let last7 = Array(miles.suffix(7))
+        return last7
+    }
+    var dates: [String] {
+        var finalDates: [String] = []
+        var dates = FacebookController.sharedController.sessions.flatMap({$0.formattedDate})
+        for date in dates {
+            let newDate = String(date.characters.suffix(5))
+            finalDates.append(newDate)
+        }
+        let last7 = Array(finalDates.suffix(7))
+        return last7
     }
     
     
@@ -37,37 +53,38 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
         self.profileImageView.clipsToBounds = true
         barChart.delegate = self
-//        setChart(, values: [Double])
-        
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         FacebookController.sharedController.pullUserData()
         callPullUserData()
-        
+        self.setChart(dates,values: miles)
     }
     
-        func setChart(dataPoints: [String], values: [Double]) {
-            barChart.noDataText = "Data has not been provided for charts."
-    
-            for i in 0..<dataPoints.count {
-                let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
-                dataEntries.append(dataEntry)
-            }
-    
-            let chartDataSet = BarChartDataSet(yVals: dataEntries, label: "Miles Traveled")
-            let chartData = BarChartData(xVals:miles, dataSet: chartDataSet)
-            barChart.animate(xAxisDuration: 2.5, yAxisDuration: 3.0)
-            barChart.data = chartData
-            barChart.descriptionText = ""
-    
-            chartDataSet.colors = [UIColor(red: 25/255, green: 25/255, blue: 205/255, alpha: 1)]
+    func setChart(dataPoints: [String], values: [Double]) {
+        barChart.noDataText = "Data has not been provided for charts."
+        barChart.xAxis.labelPosition = .Bottom
+        
+        for i in 0..<dataPoints.count {
+            let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
+            dataEntries.append(dataEntry)
         }
+        
+        let chartDataSet = BarChartDataSet(yVals: dataEntries, label: "Miles Traveled")
+        let chartData = BarChartData(xVals:dates, dataSet: chartDataSet)
+        barChart.animate(xAxisDuration: 1.0, yAxisDuration: 1.5)
+        barChart.data = chartData
+        barChart.descriptionText = ""
+        
+        chartDataSet.colors = [UIColor(red: 25/255, green: 25/255, blue: 205/255, alpha: 1)]
+        chartDataSet.highlightEnabled = false
+        barChart.drawGridBackgroundEnabled = false
+    }
     
-        func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
-            //  print("\(entry.value) in \(days[entry.xIndex])")
-        }
+    func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
+        //  print("\(entry.value) in \(days[entry.xIndex])")
+    }
     
     func callPullUserData() {
         user = FacebookController.sharedController.userData
