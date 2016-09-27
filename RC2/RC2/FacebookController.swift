@@ -281,6 +281,7 @@ class FacebookController {
     
     func pullUserMilesData(){
         let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+            //(FIRAuth.auth()?.currentUser?.uid)!
         let date = NSDate()
         let formatter = NSDateFormatter()
         // look into mm/dd/yyyy without branches

@@ -16,12 +16,19 @@ class RankingTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
-        print(rankedFriends.count)
+        self.tableView.backgroundColor = UIColor(red: 20/255.0, green: 57/255.0, blue: 80/255.0, alpha: 1.0)
+
         self.rankedFriends = FacebookController.sharedController.friendDataArray.sort { (friend1, friend2) -> Bool in
             return friend1.friendMiles > friend2.friendMiles
         }
     }
     
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = UIColor(red: 20/255.0, green: 57/255.0, blue: 80/255.0, alpha: 1.0)
+//        tableView.separatorColor = UIColor.yellowColor()
+
+    }
+//
     // MARK: - Table view data source
     
     @IBAction func updateButton(sender: AnyObject) {
@@ -35,7 +42,7 @@ class RankingTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        selectedCell.contentView.backgroundColor = UIColor(red: 255/255.0, green: 58/255.0, blue: 0/255.0, alpha: 1.0)
+        selectedCell.contentView.backgroundColor = UIColor(red: 250/255.0, green: 58/255.0, blue: 0/255.0, alpha: 0.6)
     }
     
 //    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
@@ -50,8 +57,10 @@ class RankingTableViewController: UITableViewController {
         let indexPathNumber = indexPath.row + 1
         cell?.rankNumberLabel.text = String(indexPathNumber)
         cell?.nameLabel.text = "\(friend.friendFirstName) \(friend.friendLastName)"
-        cell?.milesLabel.text = "\(friend.friendMiles) miles"
-        cell?.stepsLabel.text = "\(friend.friendSteps) steps"
+        cell?.milesLabel.text = "\(friend.friendMiles) mi"
+        cell?.stepsLabel.text = "Steps: \(friend.friendSteps)"
+        
+        tableView.separatorColor = UIColor(colorLiteralRed: 250/255.0, green: 58/255.0, blue: 0/255.0, alpha: 0.6)
         
         return cell ?? UITableViewCell()
     }
@@ -92,7 +101,7 @@ class RankingTableViewController: UITableViewController {
      }
      */
     
-    /*
+    
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -100,6 +109,6 @@ class RankingTableViewController: UITableViewController {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
      }
-     */
+     
     
 }
