@@ -297,7 +297,6 @@ class FacebookController {
                 let friendData = Friend(friendUID: fireBaseID, friendFirstName: userFirstName, friendLastName: userLastName, friendMiles: userMiles, friendSteps: userSteps)
                 
                 self.friendDataArray.append(friendData)
-                print(friendData)
                 print(self.friendDataArray.count)
             })
         })
@@ -341,9 +340,7 @@ class FacebookController {
                 for (key, value) in milesDict {
                     guard let miles = value["miles"] as? String else { return }
                     if let mile: Double =  Double(miles){
-                        print(mile)
                         total += mile
-                        print(total)
                     }
                     guard let date = value["date"] as? String else {return}
                     guard let trueDate = Double(date) else {return}

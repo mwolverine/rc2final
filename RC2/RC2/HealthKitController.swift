@@ -269,14 +269,14 @@ class HealthKitController {
     
     func setLastDaysToZero(){
         var timeIntervalSinceLastLogin = self.lastDateSynced.timeIntervalSinceNow
-        var lastLoggedDate = 1474869600.0
+        var lastLoggedDate = NSCalendar.currentCalendar().startOfDayForDate(self.lastDateSynced)
         var rotatingDate = lastLoggedDate
         repeat {
             timeIntervalSinceLastLogin -= 86400.00
-            let date = NSDate(timeIntervalSince1970: rotatingDate).dateByAddingTimeInterval(-86400.00)
+            let date = rotatingDate.dateByAddingTimeInterval(-86400.00)
             FacebookController.sharedController.createSessionSteps("0.0", date: date)
             FacebookController.sharedController.createSessionMiles("0.0", date: date)
-            lastLoggedDate -= 86400.00
+            lastLoggedDate = lastLoggedDate.dateByAddingTimeInterval(-86400.00)
         } while timeIntervalSinceLastLogin > 86400
     }
     
