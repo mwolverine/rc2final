@@ -37,7 +37,7 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
         self.profileImageView.clipsToBounds = true
         barChart.delegate = self
-        setChart(, values: <#T##[Double]#>)
+//        setChart(, values: [Double])
         
     }
     
