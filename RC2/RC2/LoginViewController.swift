@@ -28,7 +28,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         // FACEBOOK: Checks if user is logged in
         if (FBSDKAccessToken.currentAccessToken() != nil)
         {
-        }
+            }
         else
         {
             //FACEBOOK: PLaces Facebook Logo

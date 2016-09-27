@@ -233,11 +233,14 @@ class FacebookController {
         })
     }
     
-    // Pulls user friend's data from FIR to App
+    // Pulls user friend's data 
+    //****CHANGE ID
+    //from FIR to App
     //**DATE IS TODAY
     
     func pullFriendsMilesData(){
-        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+            //(FIRAuth.auth()?.currentUser?.uid)!
         let date = NSDate()
         let formatter = NSDateFormatter()
         // look into mm/dd/yyyy without branches

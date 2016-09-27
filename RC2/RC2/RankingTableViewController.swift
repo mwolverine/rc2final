@@ -33,6 +33,15 @@ class RankingTableViewController: UITableViewController {
         return self.rankedFriends.count
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        selectedCell.contentView.backgroundColor = UIColor(red: 255/255.0, green: 58/255.0, blue: 0/255.0, alpha: 1.0)
+    }
+    
+//    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+//        let cellToDeSelect:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+//        cellToDeSelect.contentView.backgroundColor = UIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>, alpha: 1.0)
+//    }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("publicCell", forIndexPath: indexPath) as? IndividualTableViewCell
@@ -46,6 +55,7 @@ class RankingTableViewController: UITableViewController {
         
         return cell ?? UITableViewCell()
     }
+    
     
     /*
      // Override to support conditional editing of the table view.
