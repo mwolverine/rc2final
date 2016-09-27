@@ -67,7 +67,6 @@ class FacebookController {
                         
                         self.returnMyData()
                         self.returnFriendListData()
-                        self.pullFriendsMilesData()
                         self.pullUserData()
                         
                         //commented out background delivery for testing
@@ -268,8 +267,6 @@ class FacebookController {
                                     let friendData = Friend(friendUID: friendUID, friendFirstName: friendFirstName, friendLastName: friendLastName, friendMiles: friendMiles, friendSteps: friendSteps)
                                     self.friendDataArray.append(friendData)
                                     print(self.friendDataArray.count)
-                                    self.pullUserMilesData()
-                                    
                                 })
                             })
                         }
@@ -297,9 +294,9 @@ class FacebookController {
                 guard let userMiles = snapshot.value!["miles"] as? String else { return }
                 guard let userSteps = snapshot.value!["steps"] as? String else { return }
                 
-                let friendData = Friend(friendUID: fireBaseID, friendFirstName: userFirstName, friendLastName: userLastName, friendMiles: userMiles, friendSteps: userSteps)
+                let userData = Friend(friendUID: fireBaseID, friendFirstName: userFirstName, friendLastName: userLastName, friendMiles: userMiles, friendSteps: userSteps)
                 
-                self.friendDataArray.append(friendData)
+                self.friendDataArray.append(userData)
                 print(self.friendDataArray.count)
             })
         })

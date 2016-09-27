@@ -75,7 +75,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "userLoggedIn" {
+            FacebookController.sharedController.friendDataArray = []
             FacebookController.sharedController.pullFriendsMilesData()
+            FacebookController.sharedController.pullUserMilesData()
         }
     }
 }
