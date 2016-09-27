@@ -258,7 +258,7 @@
 				TargetAttributes = {
 					400320191D90721F0056EE64 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 54XFUGG23H;
+						DevelopmentTeam = JUWJEKQFF8;
 						SystemCapabilities = {
 							com.apple.HealthKit = {
 								enabled = 1;
@@ -506,7 +506,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = RC2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ChrisYoo.RC2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ChrisYooll.RC2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = RC2/FaceBookHeader.h;
@@ -523,7 +523,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = RC2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ChrisYoo.RC2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ChrisYooll.RC2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = RC2/FaceBookHeader.h;
