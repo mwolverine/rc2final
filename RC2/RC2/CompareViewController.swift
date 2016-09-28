@@ -38,6 +38,20 @@ class CompareViewController: UIViewController, ChartViewDelegate {
         callFriendData()
         setChart(dates, values: miles)
         setChart(compDates, values: compMiles)
+        
+        
+    }
+    
+    func returnNumberForSegmentController(int: Int) -> Int {
+        switch int {
+        case 0:
+            return 7
+        case 1:
+            return 30
+        case 2:
+            return 90
+        default: return 0
+        }
     }
     
     var miles: [Double] {
@@ -46,7 +60,7 @@ class CompareViewController: UIViewController, ChartViewDelegate {
         for mile in milesArray {
             miles.append(Double(mile)!)
         }
-        let last7 = Array(miles.suffix(7))
+        let last7 = Array(miles.suffix(returnNumberForSegmentController(segmentedView.selectedSegmentIndex)))
         return last7
     }
     
@@ -57,7 +71,7 @@ class CompareViewController: UIViewController, ChartViewDelegate {
             let newDate = String(date.characters.suffix(5))
             finalDates.append(newDate)
         }
-        let last7 = Array(finalDates.suffix(7))
+        let last7 = Array(dates.suffix(returnNumberForSegmentController(segmentedView.selectedSegmentIndex)))
         return last7
     }
     
@@ -69,7 +83,7 @@ class CompareViewController: UIViewController, ChartViewDelegate {
             miles.append(Double(mile)!)
         }
         
-        let last7 = Array(miles.suffix(7))
+        let last7 = Array(miles.suffix(returnNumberForSegmentController(segmentedView.selectedSegmentIndex)))
         return last7
     }
     
@@ -83,11 +97,16 @@ class CompareViewController: UIViewController, ChartViewDelegate {
             dates.append(newDate)
         }
         
-        let last7 = Array(dates.suffix(7))
+        let last7 = Array(dates.suffix(returnNumberForSegmentController(segmentedView.selectedSegmentIndex)))
         return last7
     }
     
   
+    @IBAction func segmentValueChanged(sender: AnyObject) {
+        
+        self.setChart(dates, values: miles)
+        self.setChart(compDates, values: compMiles)
+    }
 
     
     func setChart(dataPoints: [String], values: [Double]) {
