@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -71,7 +71,7 @@
         <scene sceneID="PNG-2g-7zS">
             <objects>
                 <viewControllerPlaceholder storyboardName="Profile" id="3cU-0O-jnc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="pe4-xe-7sz"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile" id="pe4-xe-7sz"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mSe-pR-Vxl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -81,11 +81,14 @@
         <scene sceneID="Ci0-rz-txW">
             <objects>
                 <viewControllerPlaceholder storyboardIdentifier="rankingID" storyboardName="RankingTableView" id="0Ku-9A-Jas" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="HEw-t6-ewc"/>
+                    <tabBarItem key="tabBarItem" title="Rankings" id="HEw-t6-ewc"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TJp-im-ySO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2448.5" y="651"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="profile" width="25" height="25"/>
+    </resources>
 </document>

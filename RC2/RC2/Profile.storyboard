@@ -121,11 +121,11 @@
             </objects>
             <point key="canvasLocation" x="3175" y="100"/>
         </scene>
-        <!--Item 1-->
+        <!--Profile-->
         <scene sceneID="DDr-eU-Jlu">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BDX-MY-JRM" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item 1" id="aXo-B9-bMc"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile" id="aXo-B9-bMc"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bEZ-A2-fiv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -143,4 +143,7 @@
             <point key="canvasLocation" x="2437" y="74"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="profile" width="25" height="25"/>
+    </resources>
 </document>
