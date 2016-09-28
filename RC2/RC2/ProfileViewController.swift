@@ -11,7 +11,7 @@ import Charts
 
 class ProfileViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
-        
+    
     @IBAction func update(sender: AnyObject) {
         callPullUserData()
     }
@@ -68,21 +68,24 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
         profileImageView.contentMode = .ScaleAspectFill
         self.profileImageView.layer.borderWidth = 1
         self.profileImageView.layer.borderColor = UIColor.whiteColor().CGColor
-
+        
         self.navigationController?.navigationBar.backgroundColor = UIColor(red: 247/255, green: 57/255, blue: 80/255, alpha: 1.0)
         barChart.delegate = self
         
         FacebookController.sharedController.pullUserData {
             self.callPullUserData()
             self.setChart(self.dates,values: self.miles)
-
+            
         }
     }
     
-
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-       // self.setChart(dates,values: miles)
+        FacebookController.sharedController.pullUserData {
+            self.callPullUserData()
+            self.setChart(self.dates,values: self.miles)
+        }
     }
     
     func setChart(dataPoints: [String], values: [Double]) {
@@ -109,7 +112,7 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
         chartData.notifyDataChanged()
         chartDataSet.notifyDataSetChanged()
         if segmentedControl.selectedSegmentIndex == 0 {
-        barChart.xAxis.setLabelsToSkip(0)
+            barChart.xAxis.setLabelsToSkip(0)
         } else {
             barChart.xAxis.resetLabelsToSkip()
             chartDataSet.valueTextColor = .clearColor()
