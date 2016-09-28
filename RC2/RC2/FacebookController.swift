@@ -17,6 +17,7 @@ class FacebookController {
     var friendData: [String] = []
     var friendDataArray : [Friend] = []
     var userData: User?
+    var friendlyData: Friend?
     var sessions: [Session] = [] {
         didSet{
             sessions.sortInPlace { (session1, session2) -> Bool in
