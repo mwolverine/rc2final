@@ -249,7 +249,9 @@ class FacebookController {
     //**DATE IS TODAY
     
     func pullFriendsMilesData(){
-        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+
+        //"UQRBpwDLs5a96JSfXZllYkjIvt23"
         //(FIRAuth.auth()?.currentUser?.uid)!
         
         //"UQRBpwDLs5a96JSfXZllYkjIvt23"
@@ -293,7 +295,9 @@ class FacebookController {
     //**DATE IS TODAY
     
     func pullUserMilesData(){
-        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+
+        //"UQRBpwDLs5a96JSfXZllYkjIvt23"
         //(FIRAuth.auth()?.currentUser?.uid)!
         //"UQRBpwDLs5a96JSfXZllYkjIvt23"
         let date = NSDate()
@@ -323,7 +327,9 @@ class FacebookController {
     // Added completion to make Profile load faster...
     
     func pullUserData(completion: (() -> Void)?) {
-        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        
+        //"UQRBpwDLs5a96JSfXZllYkjIvt23"
         //            (FIRAuth.auth()?.currentUser?.uid)!
         let date = NSDate()
         let formatter = NSDateFormatter()

@@ -29,6 +29,7 @@ class CompareViewController: UIViewController, ChartViewDelegate {
         super.viewDidLoad()
         let friendUID = friend?.friendUID
         FacebookController.sharedController.queryFriendMiles(friendUID!)
+        print(friendUID)
         
     }
     

@@ -258,10 +258,13 @@
 				TargetAttributes = {
 					400320191D90721F0056EE64 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 92H72G9Y2Z;
+						DevelopmentTeam = 54XFUGG23H;
 						SystemCapabilities = {
 							com.apple.HealthKit = {
 								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 0;
 							};
 						};
 					};
@@ -507,7 +510,7 @@
 				INFOPLIST_FILE = RC2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Chris33.RC2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Chris.RC2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = RC2/FaceBookHeader.h;
@@ -525,7 +528,7 @@
 				INFOPLIST_FILE = RC2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Chris33.RC2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Chris.RC2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = RC2/FaceBookHeader.h;
