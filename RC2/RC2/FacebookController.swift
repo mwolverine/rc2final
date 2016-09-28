@@ -68,15 +68,15 @@ class FacebookController {
                         
                         self.returnMyData()
                         self.returnFriendListData()
-                        self.pullUserData()
+                        self.pullUserData(nil)
                         
-                    
+                        
                         //commented out background delivery for testing
                         
                         
                         HealthKitController.sharedController.authorizeHealthKit { (success, error) in
                             if success {
-//                                HealthKitController.sharedController.enableBackgroundDelivery()
+                                //                                HealthKitController.sharedController.enableBackgroundDelivery()
                             }
                             HealthKitController.sharedController.setLastDaysToZero()
                             HealthKitController.sharedController.setupMilesCollectionStatisticQuery()
@@ -168,10 +168,10 @@ class FacebookController {
                 HealthKitController.sharedController.authorizeHealthKit({ (success, error) in
                     if success {
                         HealthKitController.sharedController.setLastDaysToZero()
-                HealthKitController.sharedController.setupMilesCollectionStatisticQuery()
-                HealthKitController.sharedController.setupStepsCollectionStatisticQuery()
-                
-                self.queryMiles()
+                        HealthKitController.sharedController.setupMilesCollectionStatisticQuery()
+                        HealthKitController.sharedController.setupStepsCollectionStatisticQuery()
+                        
+                        self.queryMiles()
                     }
                 })
             }
@@ -234,15 +234,15 @@ class FacebookController {
         })
     }
     
-    // Pulls user friend's data 
+    // Pulls user friend's data
     //****CHANGE ID
     //from FIR to App
     //**DATE IS TODAY
     
     func pullFriendsMilesData(){
         let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
-            //(FIRAuth.auth()?.currentUser?.uid)!
-
+        //(FIRAuth.auth()?.currentUser?.uid)!
+        
         //"UQRBpwDLs5a96JSfXZllYkjIvt23"
         let date = NSDate()
         let formatter = NSDateFormatter()
@@ -310,9 +310,12 @@ class FacebookController {
     
     // Pulls user data from Firebase to User Model
     //**DATE IS TODAY
-    func pullUserData() {
+    
+    // Added completion to make Profile load faster...
+    
+    func pullUserData(completion: (() -> Void)?) {
         let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
-//            (FIRAuth.auth()?.currentUser?.uid)!
+        //            (FIRAuth.auth()?.currentUser?.uid)!
         let date = NSDate()
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -333,6 +336,9 @@ class FacebookController {
                 let userData = User(userFirstName: userFirstName, userLastName: userLastName, userEmail: userEmail, userGender: userGender, userFID: userFID, userUID: fireBaseID, userPhotoURL: userPhotoURL, userMiles: userMiles, userSteps: userSteps)
                 print(userData.userFirstName)
                 self.userData = userData
+                if let completion = completion {
+                    completion()
+                }
             })
         })
     }

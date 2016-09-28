@@ -71,14 +71,18 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
 
         self.navigationController?.navigationBar.backgroundColor = UIColor(red: 247/255, green: 57/255, blue: 80/255, alpha: 1.0)
         barChart.delegate = self
+        
+        FacebookController.sharedController.pullUserData {
+            self.callPullUserData()
+            self.setChart(self.dates,values: self.miles)
+
+        }
     }
     
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        FacebookController.sharedController.pullUserData()
-        callPullUserData()
-        self.setChart(dates,values: miles)
+       // self.setChart(dates,values: miles)
     }
     
     func setChart(dataPoints: [String], values: [Double]) {
