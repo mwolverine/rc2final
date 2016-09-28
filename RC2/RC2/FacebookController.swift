@@ -69,6 +69,7 @@ class FacebookController {
                         self.returnFriendListData()
                         self.pullUserData()
                         
+                    
                         //commented out background delivery for testing
                         
                         
@@ -78,7 +79,7 @@ class FacebookController {
                             }
                             HealthKitController.sharedController.setLastDaysToZero()
                             HealthKitController.sharedController.setupMilesCollectionStatisticQuery()
-                        HealthKitController.sharedController.setupStepsCollectionStatisticQuery()
+                            HealthKitController.sharedController.setupStepsCollectionStatisticQuery()
                         }
                         
                     }
@@ -238,7 +239,8 @@ class FacebookController {
     //**DATE IS TODAY
     
     func pullFriendsMilesData(){
-        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+            //(FIRAuth.auth()?.currentUser?.uid)!
 
         //"UQRBpwDLs5a96JSfXZllYkjIvt23"
         let date = NSDate()
@@ -281,7 +283,8 @@ class FacebookController {
     //**DATE IS TODAY
     
     func pullUserMilesData(){
-        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+        //(FIRAuth.auth()?.currentUser?.uid)!
         //"UQRBpwDLs5a96JSfXZllYkjIvt23"
         let date = NSDate()
         let formatter = NSDateFormatter()

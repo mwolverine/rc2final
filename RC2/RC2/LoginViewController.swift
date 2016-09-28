@@ -22,13 +22,25 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     @IBAction func faceBookButtonTapped(sender: AnyObject) {
     }
     
+    override func viewDidAppear(animated: Bool) {
+        if (FBSDKAccessToken.currentAccessToken() != nil)
+        {
+      
+            FacebookController.sharedController.friendDataArray = []
+            FacebookController.sharedController.pullFriendsMilesData()
+            FacebookController.sharedController.pullUserMilesData()
+            performSegueWithIdentifier("userLoggedIn", sender: self)
+            
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // FACEBOOK: Checks if user is logged in
         if (FBSDKAccessToken.currentAccessToken() != nil)
         {
-            }
+        }
         else
         {
             //FACEBOOK: PLaces Facebook Logo
@@ -60,7 +72,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         self.performSegueWithIdentifier("userLoggedIn", sender: self)
     }
     
- 
+    
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         print("User Logged Out")
     }
@@ -69,16 +81,17 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         FacebookController.sharedController.facebookCredential()
     }
     
-    func signedIn(user: FIRUser?) {
-     
+    func signedIn() {
+        let viewController = self.storyboard!.instantiateViewControllerWithIdentifier("ProfileView") as UIViewController
+        self.presentViewController(viewController, animated: true, completion: nil)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "userLoggedIn" {
-            FacebookController.sharedController.friendDataArray = []
-            FacebookController.sharedController.pullFriendsMilesData()
-            FacebookController.sharedController.pullUserMilesData()
-        }
-    }
+//    override func prepareForSegueLogin (segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.identifier == "userLoggedIn" {
+//            FacebookController.sharedController.friendDataArray = []
+//            FacebookController.sharedController.pullFriendsMilesData()
+//            FacebookController.sharedController.pullUserMilesData()
+//        }
+//    }
 }
 
