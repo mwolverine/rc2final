@@ -21,7 +21,7 @@ class RankingTableViewController: UITableViewController {
         self.rankedFriends = FacebookController.sharedController.friendDataArray.sort { (friend1, friend2) -> Bool in
             return friend1.friendMiles > friend2.friendMiles
         }
-        FacebookController.sharedController.queryFriendMiles()
+//        FacebookController.sharedController.queryFriendMiles()
         
     }
     
@@ -108,9 +108,10 @@ class RankingTableViewController: UITableViewController {
      // MARK: - Navigation
      
      override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "segue" {
+        if segue.identifier == "comparingChartsView" {
             if let detailViewController = segue.destinationViewController as? CompareViewController, indexPath = tableView.indexPathForSelectedRow {
                 let rankedDetailFriend = rankedFriends[indexPath.row]
+                detailViewController.friend = rankedDetailFriend
             }
         }
      }

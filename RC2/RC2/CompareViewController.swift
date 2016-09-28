@@ -11,6 +11,10 @@ import Charts
 
 class CompareViewController: UIViewController, ChartViewDelegate {
     
+    var friend: Friend?
+    var dataEntries: [ChartDataEntry] = []
+    var user: User?
+    
     @IBOutlet weak var personalName: UILabel!
     @IBOutlet weak var personalMiles: UILabel!
     @IBOutlet weak var personalSteps: UILabel!
@@ -19,10 +23,22 @@ class CompareViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var friendSteps: UILabel!
     @IBOutlet weak var segmentedView: UISegmentedControl!
     @IBOutlet weak var lineChart: LineChartView!
+   
     
-    var dataEntries: [ChartDataEntry] = []
-    var user: User?
-    var friend: Friend?
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let friendUID = friend?.friendUID
+        FacebookController.sharedController.queryFriendMiles(friendUID!)
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        callPullUserData()
+        callFriendData()
+        setChart(dates, values: miles)
+        setChart(compDates, values: compMiles)
+    }
     
     var miles: [Double] {
         var miles: [Double] = []
@@ -71,19 +87,8 @@ class CompareViewController: UIViewController, ChartViewDelegate {
         return last7
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        callPullUserData()
-        callFriendData()
-        setChart(dates, values: miles)
-        setChart(compDates, values: compMiles)
-    }
+  
+
     
     func setChart(dataPoints: [String], values: [Double]) {
         
@@ -100,10 +105,7 @@ class CompareViewController: UIViewController, ChartViewDelegate {
     func callPullUserData() {
         
         user = FacebookController.sharedController.userData
-        
-        print(user?.userEmail)
-        print(user?.userEmail)
-        
+ 
         if let user = user {
             
             personalName.text = "\(user.userFirstName)"
@@ -113,8 +115,6 @@ class CompareViewController: UIViewController, ChartViewDelegate {
     }
     
     func callFriendData() {
-        
-        friend = FacebookController.sharedController.friendlyData
         
         if let friend = friend {
             

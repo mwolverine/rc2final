@@ -131,6 +131,7 @@
                                     <outlet property="nameLabel" destination="5D3-cf-H90" id="NFa-6i-Ka1"/>
                                     <outlet property="rankNumberLabel" destination="S9c-vT-Zp8" id="zHa-lE-uWc"/>
                                     <outlet property="stepsLabel" destination="CqP-OV-9mf" id="Dfs-lJ-Xja"/>
+                                    <segue destination="Fn3-0c-UNb" kind="show" identifier="comparingChartsView" id="cKK-0t-Eok"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -146,6 +147,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bkm-Zh-rBC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3370" y="158"/>
+        </scene>
+        <!--ComparingChartsView-->
+        <scene sceneID="uhj-Cg-zFI">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ComparingChartsView" id="Fn3-0c-UNb" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1A0-PT-o8e" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3863.5" y="164"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EzL-kh-Lmj">

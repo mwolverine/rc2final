@@ -377,10 +377,9 @@ class FacebookController {
         })
     }
     
-    func queryFriendMiles() {
+    func queryFriendMiles(friendUID: String) {
         
         self.friendSessions = []
-        let friendUID = RankingTableViewController.friendUID
         
         var total = 0.00
         firebaseURL.child("session").child(friendUID).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in
