@@ -21,6 +21,8 @@ class RankingTableViewController: UITableViewController {
         self.rankedFriends = FacebookController.sharedController.friendDataArray.sort { (friend1, friend2) -> Bool in
             return friend1.friendMiles > friend2.friendMiles
         }
+        FacebookController.sharedController.queryFriendMiles()
+        
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -65,6 +67,7 @@ class RankingTableViewController: UITableViewController {
         return cell ?? UITableViewCell()
     }
     
+    static var friendUID = "3liA310JZGc0SBhgG2TS22nH7PD2"
     
     /*
      // Override to support conditional editing of the table view.
