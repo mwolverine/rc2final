@@ -74,7 +74,7 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
         
         FacebookController.sharedController.pullUserData {
             self.callPullUserData()
-            self.setChart(self.dates,values: self.miles)
+//            self.setChart(self.dates,values: self.miles)
             
         }
     }
