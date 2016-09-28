@@ -10,6 +10,7 @@ import UIKit
 import Charts
 
 class ProfileViewController: UIViewController, ChartViewDelegate {
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     @IBAction func update(sender: AnyObject) {
         callPullUserData()
@@ -17,17 +18,14 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var firstNameLabel: UILabel!
-    @IBOutlet weak var lastNameLabel: UILabel!
-    @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var userMilesLabel: UILabel!
     @IBOutlet weak var userStepsLabel: UILabel!
-    @IBOutlet weak var genderLabel: UILabel!
     @IBOutlet weak var barChart: BarChartView!
     
     var dataEntries: [BarChartDataEntry] = []
     var miles: [Double] {
         var miles: [Double] = []
-        var milesArray = FacebookController.sharedController.sessions.flatMap({$0.miles})
+        let milesArray = FacebookController.sharedController.sessions.flatMap({$0.miles})
         for mile in milesArray {
             miles.append(Double(mile)!)
         }
@@ -36,7 +34,7 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
     }
     var dates: [String] {
         var finalDates: [String] = []
-        var dates = FacebookController.sharedController.sessions.flatMap({$0.formattedDate})
+        let dates = FacebookController.sharedController.sessions.flatMap({$0.formattedDate})
         for date in dates {
             let newDate = String(date.characters.suffix(5))
             finalDates.append(newDate)
@@ -50,8 +48,15 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.segmentedControl.layer.borderColor = UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1.0).CGColor
+        self.segmentedControl.layer.borderWidth = 2
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
         self.profileImageView.clipsToBounds = true
+        profileImageView.contentMode = .ScaleAspectFill
+        self.profileImageView.layer.borderWidth = 1
+        self.profileImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        
+        self.navigationController?.navigationBar.backgroundColor = UIColor(red: 247/255, green: 57/255, blue: 80/255, alpha: 1.0)
         barChart.delegate = self
     }
     
@@ -91,12 +96,10 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
         print(user?.userEmail)
         print(user?.userEmail)
         if let user = user {
-            firstNameLabel.text = " \(user.userFirstName) \( user.userLastName)"
-            emailLabel.text = user.userEmail
+            firstNameLabel.text = "Welcome \(user.userFirstName)"
             //lastNameLabel.text = user?.userLastName
-            userMilesLabel.text = "Total Miles Walked: \(user.userMiles)"
-            userStepsLabel.text = "Total Steps Taken: \(user.userSteps)"
-            //genderLabel.text = user?.userGender
+            userMilesLabel.text = "Miles: \(user.userMiles)"
+            userStepsLabel.text = "Steps: \(user.userSteps)"
             
             let imageURL = user.userPhotoURL
             if let imageURLString: NSURL = NSURL(string: imageURL) {

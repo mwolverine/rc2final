@@ -238,8 +238,9 @@ class FacebookController {
     //**DATE IS TODAY
     
     func pullFriendsMilesData(){
-        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
-            //(FIRAuth.auth()?.currentUser?.uid)!
+        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+
+        //"UQRBpwDLs5a96JSfXZllYkjIvt23"
         let date = NSDate()
         let formatter = NSDateFormatter()
         // look into mm/dd/yyyy without branches
@@ -281,6 +282,7 @@ class FacebookController {
     
     func pullUserMilesData(){
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        //"UQRBpwDLs5a96JSfXZllYkjIvt23"
         let date = NSDate()
         let formatter = NSDateFormatter()
         // look into mm/dd/yyyy without branches

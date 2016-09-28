@@ -22,6 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Override point for customization after application launch.
         FIRApp.configure()
+        UINavigationBar.appearance().tintColor = UIColor(red: 255.0/255.0, green: 255.0/225.0, blue: 255.0/225.0, alpha: 1.0)
+        
+        UINavigationBar.appearance().barTintColor = UIColor(red: 20/255.0, green: 57/225.0, blue: 80/225.0, alpha: 1.0)
+        
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "Avenir", size: 20)!]
 
         
         // Health Kit Authorization and background Fetching.
