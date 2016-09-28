@@ -335,6 +335,7 @@ class FacebookController {
     // finds total miles and daily totals for the current user
     func queryMiles() {
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        self.sessions = []
         var total = 0.00
         firebaseURL.child("session").child(fireBaseID).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in
             

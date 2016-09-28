@@ -29,9 +29,10 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
         for mile in milesArray {
             miles.append(Double(mile)!)
         }
-        let last7 = Array(miles.suffix(7))
+        let last7 = Array(miles.suffix(returnNumberForSegmentController(segmentedControl.selectedSegmentIndex)))
         return last7
     }
+    
     var dates: [String] {
         var finalDates: [String] = []
         let dates = FacebookController.sharedController.sessions.flatMap({$0.formattedDate})
@@ -39,8 +40,20 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
             let newDate = String(date.characters.suffix(5))
             finalDates.append(newDate)
         }
-        let last7 = Array(finalDates.suffix(7))
+        let last7 = Array(finalDates.suffix(returnNumberForSegmentController(segmentedControl.selectedSegmentIndex)))
         return last7
+    }
+    
+    func returnNumberForSegmentController(int: Int) -> Int {
+        switch int {
+        case 0:
+            return 7
+        case 1:
+            return 30
+        case 2:
+            return 90
+        default: return 0
+        }
     }
     
     
@@ -70,6 +83,8 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
     func setChart(dataPoints: [String], values: [Double]) {
         barChart.noDataText = "Data has not been provided for charts."
         barChart.xAxis.labelPosition = .Bottom
+        barChart.rightAxis.enabled = false
+        self.dataEntries = []
         
         for i in 0..<dataPoints.count {
             let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
@@ -80,11 +95,28 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
         let chartData = BarChartData(xVals:dates, dataSet: chartDataSet)
         barChart.animate(xAxisDuration: 1.0, yAxisDuration: 1.5)
         barChart.data = chartData
+        barChart.notifyDataSetChanged()
         barChart.descriptionText = ""
         
-        chartDataSet.colors = [UIColor(red: 25/255, green: 25/255, blue: 205/255, alpha: 1)]
+        chartDataSet.colors = [UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1)]
+        chartDataSet.valueTextColor = .whiteColor()
         chartDataSet.highlightEnabled = false
-        barChart.drawGridBackgroundEnabled = false
+        chartData.notifyDataChanged()
+        chartDataSet.notifyDataSetChanged()
+        if segmentedControl.selectedSegmentIndex == 0 {
+        barChart.xAxis.setLabelsToSkip(0)
+        } else {
+            barChart.xAxis.resetLabelsToSkip()
+            chartDataSet.valueTextColor = .clearColor()
+        }
+        barChart.leftAxis.axisMinValue = 0
+        barChart.xAxis.drawGridLinesEnabled = false
+        barChart.leftAxis.drawGridLinesEnabled = false
+        barChart.xAxis.labelTextColor = .whiteColor()
+        barChart.leftAxis.labelTextColor = .whiteColor()
+        barChart.legend.enabled = false
+        barChart.infoTextColor = UIColor.whiteColor()
+        
     }
     
     func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
@@ -112,12 +144,8 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
                         dispatch_async(dispatch_get_main_queue()) {
                             let image = UIImage(data: data!)
                             self.profileImageView.image = image
-                            
-                            
                         }
                     }
-                
-                
                 }
                 
                 task.resume()
@@ -125,6 +153,13 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
             }
         }
     }
+    
+    
+    @IBAction func segmentedControllerValueChanged(sender: UISegmentedControl) {
+        self.setChart(dates, values: miles)
+        
+    }
+    
 }
 
 
