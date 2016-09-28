@@ -45,24 +45,44 @@ class CompareViewController: UIViewController, ChartViewDelegate {
         return last7
     }
     
-//    var compMiles: [Double] {
-//        var miles: [Double]
-//        
-//    }
-//    
-//    var compDates: [String] {
-//     
-//    }
+    var compMiles: [Double] {
+        var miles: [Double] = []
+        let milesArray = FacebookController.sharedController.friendSessions.flatMap({$0.miles})
+        
+        for mile in milesArray {
+            miles.append(Double(mile)!)
+        }
+        
+        let last7 = Array(miles.suffix(7))
+        return last7
+    }
+    
+    var compDates: [String] {
+     
+        var dates: [String] = []
+        let datesArray = FacebookController.sharedController.friendSessions.flatMap({$0.formattedDate})
+        
+        for date in datesArray {
+            let newDate = String(date.characters.suffix(5))
+            dates.append(newDate)
+        }
+        
+        let last7 = Array(dates.suffix(7))
+        return last7
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         callPullUserData()
+        callFriendData()
         setChart(dates, values: miles)
+        setChart(compDates, values: compMiles)
     }
     
     func setChart(dataPoints: [String], values: [Double]) {
@@ -80,7 +100,7 @@ class CompareViewController: UIViewController, ChartViewDelegate {
     func callPullUserData() {
         
         user = FacebookController.sharedController.userData
-        friend = FacebookController.sharedController.friendlyData
+        
         print(user?.userEmail)
         print(user?.userEmail)
         
@@ -89,14 +109,19 @@ class CompareViewController: UIViewController, ChartViewDelegate {
             personalName.text = "\(user.userFirstName)"
             personalMiles.text = "Miles: \(user.userMiles)"
             personalSteps.text = "Steps: \(user.userSteps)"
+        }
+    }
+    
+    func callFriendData() {
+        
+        friend = FacebookController.sharedController.friendlyData
+        
+        if let friend = friend {
             
-            if let friend = friend {
-                
             friendName.text = "\(friend.friendFirstName)"
             friendMiles.text = "Miles: \(friend.friendMiles)"
             friendSteps.text = "Steps: \(friend.friendSteps)"
-                
-            }
+            
         }
     }
 }
