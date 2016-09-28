@@ -51,6 +51,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             //FACEBOOK: Data Access
             loginView.readPermissions = ["public_profile", "email", "user_friends"]
             loginView.delegate = self
+            
+            FacebookController.sharedController.friendDataArray = []
+            FacebookController.sharedController.pullFriendsMilesData()
+            FacebookController.sharedController.pullUserMilesData()
         }
         return
     }

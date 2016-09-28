@@ -310,7 +310,8 @@ class FacebookController {
     // Pulls user data from Firebase to User Model
     //**DATE IS TODAY
     func pullUserData() {
-        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+//            (FIRAuth.auth()?.currentUser?.uid)!
         let date = NSDate()
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
