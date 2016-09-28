@@ -26,6 +26,15 @@ class FacebookController {
         }
     }
     
+    var friendSessions: [Session] = [] {
+        didSet{
+            sessions.sortInPlace { (session1, session2) -> Bool in
+                session1.date < session2.date
+            }
+        }
+    }
+    
+    
     //temp id placed for testing
     var uid: String = ""
     static let sharedController = FacebookController()
@@ -362,6 +371,33 @@ class FacebookController {
                     let session = Session(date: trueDate, formattedDate: key, miles: miles, steps: steps)
                     self.sessions.append(session)
                 }
+            } else {
+                print("Total Miles is 0")
+            }
+        })
+    }
+    
+    func queryFriendMiles() {
+        
+        self.friendSessions = []
+        let friendUID = RankingTableViewController.friendUID
+        
+        var total = 0.00
+        firebaseURL.child("session").child(friendUID).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in
+            
+            if  let milesDict = snapshot.value as? [String: AnyObject] {
+                for (key, value) in milesDict {
+                    guard let miles = value["miles"] as? String else { return }
+                    if let mile: Double =  Double(miles){
+                        total += mile
+                    }
+                    guard let date = value["date"] as? String else {return}
+                    guard let trueDate = Double(date) else {return}
+                    guard let steps = value["steps"] as? String else {return}
+                    let friendSession = Session(date: trueDate, formattedDate: key, miles: miles, steps: steps)
+                    self.friendSessions.append(friendSession)
+                }
+                print(self.friendSessions.count)
             } else {
                 print("Total Miles is 0")
             }
