@@ -28,19 +28,16 @@ class CompareViewController: UIViewController, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         let friendUID = friend?.friendUID
-        FacebookController.sharedController.queryFriendMiles(friendUID!)
         print(friendUID)
+        callPullUserData()
+        callFriendData()
         
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        callPullUserData()
-        callFriendData()
-        setChart(dates, values: miles)
-        setChart(compDates, values: compMiles)
         
-        
+        setChart(dates, miles1: miles, dates2: compDates, miles2: compMiles)
     }
     
     func returnNumberForSegmentController(int: Int) -> Int {
@@ -105,20 +102,51 @@ class CompareViewController: UIViewController, ChartViewDelegate {
   
     @IBAction func segmentValueChanged(sender: AnyObject) {
         
-        self.setChart(dates, values: miles)
-        self.setChart(compDates, values: compMiles)
+        self.setChart(dates, miles1: miles, dates2: compDates, miles2: compMiles)
     }
 
     
-    func setChart(dataPoints: [String], values: [Double]) {
+    func setChart(dates1: [String], miles1: [Double], dates2: [String], miles2: [Double]) {
         
-        for i in 0..<dataPoints.count {
+        self.dataEntries = []
+        
+        for i in 0..<dates1.count {
             
-            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
+            
+            let dataEntry1 = ChartDataEntry(value: miles1[i], xIndex: i)
+            let dataEntry2 = ChartDataEntry(value: miles2[i], xIndex: i)
+            dataEntries.append(dataEntry1)
+            dataEntries.append(dataEntry2)
             let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Miles")
-            let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
-            dataEntries.append(dataEntry)
+            let lineChartData = LineChartData(xVals: dates1, dataSet: lineChartDataSet)
             lineChart.data = lineChartData
+            lineChart.rightAxis.enabled = false
+            lineChart.xAxis.drawGridLinesEnabled = false
+            lineChart.rightAxis.drawGridLinesEnabled = false
+            lineChart.xAxis.labelPosition = .Bottom
+            lineChart.legend.enabled = false
+            lineChartData.highlightEnabled = false
+            lineChartDataSet.circleRadius = 4.0
+            lineChartDataSet.circleColors = [UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1)]
+            lineChartDataSet.setColor(UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1))
+            lineChartDataSet.valueTextColor = .whiteColor()
+            lineChart.leftAxis.axisMinValue = 0
+            lineChart.xAxis.labelTextColor = .whiteColor()
+            lineChart.leftAxis.labelTextColor = .whiteColor()
+            lineChart.infoTextColor = UIColor.whiteColor()
+            lineChart.leftAxis.gridColor = .yellowColor()
+            lineChart.leftAxis.axisLineColor = .whiteColor()
+            
+            lineChart.animate(xAxisDuration: 1.0, yAxisDuration: 1.5)
+            lineChart.notifyDataSetChanged()
+            lineChart.descriptionText = ""
+            if segmentedView.selectedSegmentIndex == 0 {
+                lineChart.xAxis.setLabelsToSkip(0)
+            } else {
+                lineChart.xAxis.resetLabelsToSkip()
+                lineChartDataSet.valueTextColor = .clearColor()
+            }
+            
         }
     }
     

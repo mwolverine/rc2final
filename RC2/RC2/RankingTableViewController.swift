@@ -112,6 +112,8 @@ class RankingTableViewController: UITableViewController {
             if let detailViewController = segue.destinationViewController as? CompareViewController, indexPath = tableView.indexPathForSelectedRow {
                 let rankedDetailFriend = rankedFriends[indexPath.row]
                 detailViewController.friend = rankedDetailFriend
+                let friendUID = detailViewController.friend?.friendUID
+                FacebookController.sharedController.queryFriendMiles(friendUID!)
             }
         }
      }
