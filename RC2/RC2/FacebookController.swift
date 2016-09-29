@@ -28,7 +28,7 @@ class FacebookController {
     
     var friendSessions: [Session] = [] {
         didSet{
-            sessions.sortInPlace { (session1, session2) -> Bool in
+            friendSessions.sortInPlace { (session1, session2) -> Bool in
                 session1.date < session2.date
             }
         }

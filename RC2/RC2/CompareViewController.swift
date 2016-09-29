@@ -12,7 +12,8 @@ import Charts
 class CompareViewController: UIViewController, ChartViewDelegate {
     
     var friend: Friend?
-    var dataEntries: [ChartDataEntry] = []
+    var dataEntries1: [ChartDataEntry] = []
+    var dataEntries2: [ChartDataEntry] = []
     var user: User?
     
     @IBOutlet weak var personalName: UILabel!
@@ -63,12 +64,14 @@ class CompareViewController: UIViewController, ChartViewDelegate {
     }
     
     var dates: [String] {
-        var finalDates: [String] = []
-        let dates = FacebookController.sharedController.sessions.flatMap({$0.formattedDate})
-        for date in dates {
+        var dates: [String] = []
+        let datesArray = FacebookController.sharedController.sessions.flatMap({$0.formattedDate})
+        
+        for date in datesArray {
             let newDate = String(date.characters.suffix(5))
-            finalDates.append(newDate)
+            dates.append(newDate)
         }
+        
         let last7 = Array(dates.suffix(returnNumberForSegmentController(segmentedView.selectedSegmentIndex)))
         return last7
     }
@@ -108,17 +111,19 @@ class CompareViewController: UIViewController, ChartViewDelegate {
     
     func setChart(dates1: [String], miles1: [Double], dates2: [String], miles2: [Double]) {
         
-        self.dataEntries = []
+        self.dataEntries1 = []
+        self.dataEntries2 = []
         
         for i in 0..<dates1.count {
             
             
             let dataEntry1 = ChartDataEntry(value: miles1[i], xIndex: i)
             let dataEntry2 = ChartDataEntry(value: miles2[i], xIndex: i)
-            dataEntries.append(dataEntry1)
-            dataEntries.append(dataEntry2)
-            let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Miles")
-            let lineChartData = LineChartData(xVals: dates1, dataSet: lineChartDataSet)
+            dataEntries1.append(dataEntry1)
+            dataEntries2.append(dataEntry2)
+            let lineChartDataSet1 = LineChartDataSet(yVals: dataEntries1, label: "Miles")
+            let lineChartDataSet2 = LineChartDataSet(yVals: dataEntries2, label: "Miles")
+            let lineChartData = LineChartData(xVals: dates1, dataSets: [lineChartDataSet2,lineChartDataSet1])
             lineChart.data = lineChartData
             lineChart.rightAxis.enabled = false
             lineChart.xAxis.drawGridLinesEnabled = false
@@ -126,25 +131,41 @@ class CompareViewController: UIViewController, ChartViewDelegate {
             lineChart.xAxis.labelPosition = .Bottom
             lineChart.legend.enabled = false
             lineChartData.highlightEnabled = false
-            lineChartDataSet.circleRadius = 4.0
-            lineChartDataSet.circleColors = [UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1)]
-            lineChartDataSet.setColor(UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1))
-            lineChartDataSet.valueTextColor = .whiteColor()
             lineChart.leftAxis.axisMinValue = 0
             lineChart.xAxis.labelTextColor = .whiteColor()
             lineChart.leftAxis.labelTextColor = .whiteColor()
             lineChart.infoTextColor = UIColor.whiteColor()
-            lineChart.leftAxis.gridColor = .yellowColor()
+            lineChart.leftAxis.gridColor = .whiteColor()
             lineChart.leftAxis.axisLineColor = .whiteColor()
             
             lineChart.animate(xAxisDuration: 1.0, yAxisDuration: 1.5)
             lineChart.notifyDataSetChanged()
             lineChart.descriptionText = ""
+            
+            lineChartDataSet1.circleRadius = 4.0
+            lineChartDataSet1.circleColors = [UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1)]
+            lineChartDataSet1.setColor(UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1))
+            lineChartDataSet1.valueTextColor = .whiteColor()
+            lineChartDataSet1.drawFilledEnabled = true
+            lineChartDataSet1.fillColor = UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1)
+            lineChartDataSet1.mode = .CubicBezier
+            lineChartDataSet1.cubicIntensity = 0.2
+            
+            lineChartDataSet2.circleRadius = 4.0
+            lineChartDataSet2.circleColors = [.yellowColor()]
+            lineChartDataSet2.setColor(.yellowColor())
+            lineChartDataSet2.valueTextColor = .whiteColor()
+            lineChartDataSet2.drawFilledEnabled = true
+            lineChartDataSet2.fillColor = .yellowColor()
+            
             if segmentedView.selectedSegmentIndex == 0 {
                 lineChart.xAxis.setLabelsToSkip(0)
             } else {
                 lineChart.xAxis.resetLabelsToSkip()
-                lineChartDataSet.valueTextColor = .clearColor()
+                lineChartDataSet1.valueTextColor = .clearColor()
+                lineChartDataSet2.valueTextColor = .clearColor()
+                lineChartDataSet1.drawCirclesEnabled = false
+                lineChartDataSet2.drawCirclesEnabled = false
             }
             
         }
