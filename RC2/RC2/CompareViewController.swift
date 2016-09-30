@@ -135,7 +135,7 @@ class CompareViewController: UIViewController, ChartViewDelegate {
             lineChart.xAxis.labelTextColor = .whiteColor()
             lineChart.leftAxis.labelTextColor = .whiteColor()
             lineChart.infoTextColor = UIColor.whiteColor()
-            lineChart.leftAxis.gridColor = .whiteColor()
+            lineChart.leftAxis.gridColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.2)
             lineChart.leftAxis.axisLineColor = .whiteColor()
             
             lineChart.animate(xAxisDuration: 1.0, yAxisDuration: 1.5)
@@ -146,17 +146,35 @@ class CompareViewController: UIViewController, ChartViewDelegate {
             lineChartDataSet1.circleColors = [UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1)]
             lineChartDataSet1.setColor(UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1))
             lineChartDataSet1.valueTextColor = .whiteColor()
-            lineChartDataSet1.drawFilledEnabled = true
-            lineChartDataSet1.fillColor = UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1)
+            
+//            lineChartDataSet1.fillColor = UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1)
             lineChartDataSet1.mode = .CubicBezier
             lineChartDataSet1.cubicIntensity = 0.2
+            lineChartDataSet1.lineWidth = 2.0
+            
+            let gradientColors1 = [UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1).CGColor, UIColor.clearColor().CGColor]
+            let colorLocations:[CGFloat] = [0.9, 0.1]
+            let gradient1 = CGGradientCreateWithColors(CGColorSpaceCreateDeviceRGB(), gradientColors1, colorLocations)
+            let gradientColors2 = [UIColor(red: 1, green: 1, blue: 0, alpha: 1).CGColor, UIColor.clearColor().CGColor]
+            let gradient2 = CGGradientCreateWithColors(CGColorSpaceCreateDeviceRGB(), gradientColors2, colorLocations)
+            lineChartDataSet1.drawFilledEnabled = true
+            
+            lineChartDataSet1.fillAlpha = 0.6
+            lineChartDataSet1.fill = ChartFill.fillWithLinearGradient(gradient1!, angle: 90.0)
             
             lineChartDataSet2.circleRadius = 4.0
             lineChartDataSet2.circleColors = [.yellowColor()]
             lineChartDataSet2.setColor(.yellowColor())
             lineChartDataSet2.valueTextColor = .whiteColor()
             lineChartDataSet2.drawFilledEnabled = true
-            lineChartDataSet2.fillColor = .yellowColor()
+//            lineChartDataSet2.fillColor = .yellowColor()
+            lineChartDataSet2.mode = .CubicBezier
+            lineChartDataSet2.cubicIntensity = 0.2
+            lineChartDataSet2.lineWidth = 2.0
+            
+            lineChartDataSet2.drawFilledEnabled = true
+            lineChartDataSet2.fillAlpha = 0.6
+            lineChartDataSet2.fill = ChartFill.fillWithLinearGradient(gradient2!, angle: 90.0)
             
             if segmentedView.selectedSegmentIndex == 0 {
                 lineChart.xAxis.setLabelsToSkip(0)
@@ -194,4 +212,5 @@ class CompareViewController: UIViewController, ChartViewDelegate {
         }
     }
 }
+
 
