@@ -24,6 +24,7 @@ class CompareViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var friendSteps: UILabel!
     @IBOutlet weak var segmentedView: UISegmentedControl!
     @IBOutlet weak var lineChart: LineChartView!
+    @IBOutlet weak var pieChart: PieChartView!
    
     
     override func viewDidLoad() {
@@ -39,6 +40,7 @@ class CompareViewController: UIViewController, ChartViewDelegate {
         super.viewDidAppear(animated)
         
         setChart(dates, miles1: miles, dates2: compDates, miles2: compMiles)
+        setPieChart(miles, oppMiles: compMiles)
     }
     
     func returnNumberForSegmentController(int: Int) -> Int {
@@ -187,6 +189,32 @@ class CompareViewController: UIViewController, ChartViewDelegate {
             }
             
         }
+    }
+    
+    func setPieChart(userMiles: [Double], oppMiles: [Double]) {
+        
+        for i in 0..<userMiles.count {
+            let dataEntry = ChartDataEntry(value: oppMiles[i], xIndex: i)
+            dataEntries1.append(dataEntry)
+        }
+        
+        let pieChartDataSet = PieChartDataSet(yVals: dataEntries1, label: "Units Sold")
+        let pieChartData = PieChartData(xVals: userMiles, dataSet: pieChartDataSet)
+        pieChart.data = pieChartData
+        
+        var colors: [UIColor] = []
+        
+        for _ in 0..<userMiles.count {
+            
+            let red = Double(arc4random_uniform(256))
+            let green = Double(arc4random_uniform(256))
+            let blue = Double(arc4random_uniform(256))
+            
+            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
+            colors.append(color)
+        }
+        
+        pieChartDataSet.colors = colors
     }
     
     func callPullUserData() {
