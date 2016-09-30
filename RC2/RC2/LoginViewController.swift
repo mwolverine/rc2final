@@ -27,8 +27,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         {
       
             FacebookController.sharedController.friendDataArray = []
-            FacebookController.sharedController.pullFriendsMilesData()
-            FacebookController.sharedController.pullUserMilesData()
+//            FacebookController.sharedController.pullFriendsMilesData()
+//            FacebookController.sharedController.pullUserMilesData()
             FacebookController.sharedController.returnFriendListData()
             performSegueWithIdentifier("userLoggedIn", sender: self)
             
@@ -54,8 +54,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             loginView.delegate = self
             
             FacebookController.sharedController.friendDataArray = []
-            FacebookController.sharedController.pullFriendsMilesData()
-            FacebookController.sharedController.pullUserMilesData()
+//            FacebookController.sharedController.pullFriendsMilesData()
+//            FacebookController.sharedController.pullUserMilesData()
+            FacebookController.sharedController.returnFriendListData()
+
         }
         return
     }

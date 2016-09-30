@@ -1,18 +1,18 @@
-//
-//  FacebookController.swift
-//  RC2
-//
-//  Created by Chris Yoo on 9/21/16.
-//  Copyright © 2016 Chris Yoo. All rights reserved.
-//
-
-import Foundation
-import FBSDKLoginKit
-import FBSDKCoreKit
-import Firebase
-import FirebaseAuth
-
-class FacebookController {
+ //
+ //  FacebookController.swift
+ //  RC2
+ //
+ //  Created by Chris Yoo on 9/21/16.
+ //  Copyright © 2016 Chris Yoo. All rights reserved.
+ //
+ 
+ import Foundation
+ import FBSDKLoginKit
+ import FBSDKCoreKit
+ import Firebase
+ import FirebaseAuth
+ 
+ class FacebookController {
     
     var friendData: [String] = []
     var friendDataArray : [Friend] = []
@@ -204,7 +204,8 @@ class FacebookController {
     // Creates session per day on FIR from app - MILES
     
     func createSessionMiles(miles: String, date: NSDate) {
-        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+            //(FIRAuth.auth()?.currentUser?.uid)!
         //        print(fireBaseID)
         let formatter = NSDateFormatter()
         // look into mm/dd/yyyy without branches
@@ -248,9 +249,10 @@ class FacebookController {
     //from FIR to App
     //**DATE IS TODAY
     
-    func pullFriendsMilesData(){
-        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
-
+    func pullFriendsMilesData(completion: ()->Void) {
+        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+            //(FIRAuth.auth()?.currentUser?.uid)!
+        
         //"UQRBpwDLs5a96JSfXZllYkjIvt23"
         //(FIRAuth.auth()?.currentUser?.uid)!
         
@@ -263,30 +265,46 @@ class FacebookController {
         //grab FID of User
         firebaseURL.child("users").child(fireBaseID).child("friendList").observeEventType(.Value, withBlock: {(snapshot) in
             if let friendIdDict = snapshot.value as? [String: String] {
-                
+                let group = dispatch_group_create()
                 for (key, _) in friendIdDict {
+                    dispatch_group_enter(group)
                     let friendFID = key
                     
                     self.firebaseURL.child("facebookUser").child(friendFID).observeEventType(.Value, withBlock: {(snapshot) in
                         if let friendUID = snapshot.value as? String {
                             print(friendUID)
                             self.firebaseURL.child("session").child(friendUID).child("days").child("\(formatter.stringFromDate(date))").observeEventType(.Value, withBlock: { (snapshot) in
-                                guard let friendMiles = snapshot.value!["miles"] as? String else { return }
-                                guard let friendSteps = snapshot.value!["steps"] as? String else { return }
+                                guard let friendMiles = snapshot.value!["miles"] as? String else {
+                                    dispatch_group_leave(group)
+                                    return
+                                }
+                                guard let friendSteps = snapshot.value!["steps"] as? String else {
+                                    dispatch_group_leave(group)
+                                    return
+                                }
                                 print(friendMiles)
                                 
                                 self.firebaseURL.child("users").child(friendUID).observeEventType(.Value, withBlock: { (snapshot) in
-                                    guard let friendFirstName = snapshot.value!["firstName"] as? String else { return }
-                                    guard let friendLastName = snapshot.value!["lastName"] as? String else { return }
+                                    guard let friendFirstName = snapshot.value!["firstName"] as? String else {
+                                        return }
+                                    guard let friendLastName = snapshot.value!["lastName"] as? String else {
+                                        return }
                                     print(friendLastName)
                                     let friendData = Friend(friendUID: friendUID, friendFirstName: friendFirstName, friendLastName: friendLastName, friendMiles: friendMiles, friendSteps: friendSteps)
                                     self.friendDataArray.append(friendData)
                                     print(self.friendDataArray.count)
+                                    dispatch_group_leave(group)
                                 })
+                                
                             })
                         }
                     })
                 }
+                dispatch_group_notify(group, dispatch_get_main_queue(), {
+                    self.pullUserMilesData({ 
+                        completion()
+                    })
+                })
             }
         })
     }
@@ -294,12 +312,9 @@ class FacebookController {
     // Pulls user information from FIR ...for the friendlist
     //**DATE IS TODAY
     
-    func pullUserMilesData(){
+    func pullUserMilesData(completion: ()->Void){
         let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
-
-        //"UQRBpwDLs5a96JSfXZllYkjIvt23"
-        //(FIRAuth.auth()?.currentUser?.uid)!
-        //"UQRBpwDLs5a96JSfXZllYkjIvt23"
+  
         let date = NSDate()
         let formatter = NSDateFormatter()
         // look into mm/dd/yyyy without branches
@@ -317,6 +332,8 @@ class FacebookController {
                 
                 self.friendDataArray.append(userData)
                 print(self.friendDataArray.count)
+                completion()
+
             })
         })
     }
@@ -327,7 +344,8 @@ class FacebookController {
     // Added completion to make Profile load faster...
     
     func pullUserData(completion: (() -> Void)?) {
-        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+            //(FIRAuth.auth()?.currentUser?.uid)!
         
         //"UQRBpwDLs5a96JSfXZllYkjIvt23"
         //            (FIRAuth.auth()?.currentUser?.uid)!
@@ -360,7 +378,8 @@ class FacebookController {
     
     // finds total miles and daily totals for the current user
     func queryMiles() {
-        let fireBaseID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+            //(FIRAuth.auth()?.currentUser?.uid)!
         self.sessions = []
         var total = 0.00
         firebaseURL.child("session").child(fireBaseID).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in
@@ -383,7 +402,7 @@ class FacebookController {
         })
     }
     
-    func queryFriendMiles(friendUID: String) {
+    func queryFriendMiles(friendUID: String, completion: (() -> Void)?) {
         
         self.friendSessions = []
         
@@ -401,6 +420,10 @@ class FacebookController {
                     guard let steps = value["steps"] as? String else {return}
                     let friendSession = Session(date: trueDate, formattedDate: key, miles: miles, steps: steps)
                     self.friendSessions.append(friendSession)
+                    if let completion = completion {
+                        completion()
+                    }
+                    
                 }
                 print(self.friendSessions.count)
             } else {
@@ -410,4 +433,4 @@ class FacebookController {
     }
     
     
-}
+ }

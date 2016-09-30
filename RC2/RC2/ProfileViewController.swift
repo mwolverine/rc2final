@@ -162,7 +162,6 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
         }
     }
     
-    
     @IBAction func segmentedControllerValueChanged(sender: UISegmentedControl) {
         self.setChart(dates, values: miles)
         

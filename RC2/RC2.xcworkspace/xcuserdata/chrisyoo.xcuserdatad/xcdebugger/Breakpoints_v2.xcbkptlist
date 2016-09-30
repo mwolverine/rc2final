@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RC2/RankingTableViewController.swift"
-            timestampString = "496778742.951291"
+            timestampString = "496878910.570044"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -41,14 +41,62 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RC2/CompareViewController.swift"
-            timestampString = "496789970.080198"
+            filePath = "RC2/RankingTableViewController.swift"
+            timestampString = "496878922.994896"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
-            landmarkName = "CompareViewController"
-            landmarkType = "3">
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RC2/FacebookController.swift"
+            timestampString = "496881574.269919"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
+            landmarkName = "pullFriendsMilesData(_:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RC2.FacebookController.(pullFriendsMilesData (() -&gt; ()) -&gt; ()).(closure #1).(closure #2)"
+                  moduleName = "RC2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chrisyoo/Desktop/DevMountain/RC2%20Final/RC2/RC2/FacebookController.swift"
+                  timestampString = "496940508.991328"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "304"
+                  endingLineNumber = "304"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RC2.FacebookController.(pullFriendsMilesData (() -&gt; ()) -&gt; ()).(closure #1).(closure #2).(closure #1)"
+                  moduleName = "RC2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chrisyoo/Desktop/DevMountain/RC2%20Final/RC2/RC2/FacebookController.swift"
+                  timestampString = "496940508.99146"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "305"
+                  endingLineNumber = "305"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
