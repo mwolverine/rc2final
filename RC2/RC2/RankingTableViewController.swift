@@ -15,22 +15,25 @@ class RankingTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.reloadData()
         self.tableView.backgroundColor = UIColor(red: 20/255.0, green: 57/255.0, blue: 80/255.0, alpha: 1.0)
+        FacebookController.sharedController.pullFriendsMilesData {
+            self.rankedFriends = FacebookController.sharedController.friendDataArray.sort { (friend1, friend2) -> Bool in
+                return friend1.friendMiles > friend2.friendMiles
+                
+            }
+            self.tableView.reloadData()
 
-        self.rankedFriends = FacebookController.sharedController.friendDataArray.sort { (friend1, friend2) -> Bool in
-            return friend1.friendMiles > friend2.friendMiles
         }
-//        FacebookController.sharedController.queryFriendMiles()
+        //        FacebookController.sharedController.queryFriendMiles()
         
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         cell.backgroundColor = UIColor(red: 20/255.0, green: 57/255.0, blue: 80/255.0, alpha: 1.0)
-//        tableView.separatorColor = UIColor.yellowColor()
-
+        //        tableView.separatorColor = UIColor.yellowColor()
+        
     }
-//
+    //
     // MARK: - Table view data source
     
     @IBAction func updateButton(sender: AnyObject) {
@@ -45,12 +48,16 @@ class RankingTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor(red: 250/255.0, green: 58/255.0, blue: 0/255.0, alpha: 0.6)
+        
+        //        let rankedDetailFriend = rankedFriends[indexPath.row]
+        //        let friendUID = rankedDetailFriend.friendUID
+        //
+        //        FacebookController.sharedController.queryFriendMiles(friendUID, completion: {
+        //            self.performSegueWithIdentifier("id", sender: self)
+        //
+        //            })
+        
     }
-    
-//    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-//        let cellToDeSelect:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-//        cellToDeSelect.contentView.backgroundColor = UIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>, alpha: 1.0)
-//    }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("publicCell", forIndexPath: indexPath) as? IndividualTableViewCell
@@ -67,15 +74,23 @@ class RankingTableViewController: UITableViewController {
         return cell ?? UITableViewCell()
     }
     
-    static var friendUID = "3liA310JZGc0SBhgG2TS22nH7PD2"
     
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
+    
+    //    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    //        let rankedDetailFriend = rankedFriends[indexPath.row]
+    //        let friendUID = rankedDetailFriend.friendUID
+    //
+    //        FacebookController.sharedController.queryFriendMiles(friendUID, completion: {
+    //            self.performSegueWithIdentifier("id", self) {
+    //                //                    if let detailViewController = segue.destinationViewController as? CompareViewController, indexPath = tableView.indexPathForSelectedRow {
+    //                let rankedDetailFriend = self.rankedFriends[indexPath.row]
+    //                detailViewController.friend = rankedDetailFriend
+    //            }
+    //
+    //
+    //        })
+    //    }
+    //    /*
     
     /*
      // Override to support editing the table view.
@@ -103,20 +118,28 @@ class RankingTableViewController: UITableViewController {
      return true
      }
      */
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
+    }
     
+    // MARK: - Navigation
     
-     // MARK: - Navigation
-     
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "comparingChartsView" {
             if let detailViewController = segue.destinationViewController as? CompareViewController, indexPath = tableView.indexPathForSelectedRow {
                 let rankedDetailFriend = rankedFriends[indexPath.row]
                 detailViewController.friend = rankedDetailFriend
                 let friendUID = rankedDetailFriend.friendUID
-                FacebookController.sharedController.queryFriendMiles(friendUID)
+                FacebookController.sharedController.queryFriendMiles(friendUID, completion: {
+                })
             }
         }
-     }
-     
+    }
+    
     
 }
