@@ -26,6 +26,7 @@ class CompareViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var lineChart: LineChartView!
     @IBOutlet weak var pieChart: PieChartView!
    
+    @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,6 +109,18 @@ class CompareViewController: UIViewController, ChartViewDelegate {
     @IBAction func segmentValueChanged(sender: AnyObject) {
         
         self.setChart(dates, miles1: miles, dates2: compDates, miles2: compMiles)
+        
+        //scroll view + segmented control
+        switch sender.selectedSegmentIndex {
+        case 0:
+            scrollView.setContentOffset(CGPoint(x: 0,y: 0), animated: true)
+        case 1:
+            scrollView.setContentOffset(CGPoint(x: 375, y: 0), animated: true)
+        default:
+            print(1234)
+        }
+        
+        
     }
 
     
