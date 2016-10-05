@@ -39,6 +39,16 @@ class CompareViewController: UIViewController, ChartViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        personalName.layer.borderColor = UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1).CGColor
+        personalName.layer.borderWidth = 1
+        personalName.layer.masksToBounds = true
+        
+        friendName.layer.borderColor = UIColor.yellowColor().CGColor
+        friendName.layer.borderWidth = 1
+        friendName.layer.masksToBounds = true
+        self.segmentedView.layer.borderColor = UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1.0).CGColor
+        self.segmentedView.layer.borderWidth = 2
+
         
         setChart(dates, miles1: miles, dates2: compDates, miles2: compMiles)
         setPieChart(miles, oppMiles: compMiles)

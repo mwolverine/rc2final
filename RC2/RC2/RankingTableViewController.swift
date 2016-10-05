@@ -21,6 +21,7 @@ class RankingTableViewController: UITableViewController {
                 return friend1.friendMiles > friend2.friendMiles
                 
             }
+            print("tableview reloaded")
             self.tableView.reloadData()
 
         }

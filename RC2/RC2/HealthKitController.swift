@@ -15,7 +15,7 @@ class HealthKitController {
     
     static let sharedController = HealthKitController()
     
-    var lastDateSynced: NSDate = NSDate(timeInterval: -7776000, sinceDate: NSDate())
+    var lastDateSynced: NSDate = NSDate(timeInterval: -2592000, sinceDate: NSDate())
     var lastLoggedTime: NSTimeInterval?
     
     

@@ -12,9 +12,9 @@ import Charts
 class ProfileViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
-    @IBAction func update(sender: AnyObject) {
-        callPullUserData()
-    }
+//    @IBAction func update(sender: AnyObject) {
+//        callPullUserData()
+//    }
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var firstNameLabel: UILabel!
@@ -72,11 +72,11 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
         self.navigationController?.navigationBar.backgroundColor = UIColor(red: 247/255, green: 57/255, blue: 80/255, alpha: 1.0)
         barChart.delegate = self
         
-        FacebookController.sharedController.pullUserData {
-            self.callPullUserData()
-//            self.setChart(self.dates,values: self.miles)
-            
-        }
+//        FacebookController.sharedController.pullUserData {
+//            self.callPullUserData()
+////            self.setChart(self.dates,values: self.miles)
+//            
+//        }
     }
     
     
@@ -134,7 +134,7 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
     func callPullUserData() {
         user = FacebookController.sharedController.userData
         print(user?.userEmail)
-        print(user?.userEmail)
+    
         if let user = user {
             firstNameLabel.text = "Welcome \(user.userFirstName)"
             //lastNameLabel.text = user?.userLastName

@@ -204,7 +204,7 @@
     // Creates session per day on FIR from app - MILES
     
     func createSessionMiles(miles: String, date: NSDate) {
-        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+        let fireBaseID: String = "hssekYSouyWPqgbIQ4xYxMuSdK13"
             //(FIRAuth.auth()?.currentUser?.uid)!
         //        print(fireBaseID)
         let formatter = NSDateFormatter()
@@ -250,7 +250,7 @@
     //**DATE IS TODAY
     
     func pullFriendsMilesData(completion: ()->Void) {
-        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+        let fireBaseID: String = "hssekYSouyWPqgbIQ4xYxMuSdK13"
             //(FIRAuth.auth()?.currentUser?.uid)!
         
         //"UQRBpwDLs5a96JSfXZllYkjIvt23"
@@ -344,7 +344,7 @@
     // Added completion to make Profile load faster...
     
     func pullUserData(completion: (() -> Void)?) {
-        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+        let fireBaseID: String = "hssekYSouyWPqgbIQ4xYxMuSdK13"
             //(FIRAuth.auth()?.currentUser?.uid)!
         
         //"UQRBpwDLs5a96JSfXZllYkjIvt23"
@@ -378,7 +378,7 @@
     
     // finds total miles and daily totals for the current user
     func queryMiles() {
-        let fireBaseID: String = "UQRBpwDLs5a96JSfXZllYkjIvt23"
+        let fireBaseID: String = "hssekYSouyWPqgbIQ4xYxMuSdK13"
             //(FIRAuth.auth()?.currentUser?.uid)!
         self.sessions = []
         var total = 0.00
