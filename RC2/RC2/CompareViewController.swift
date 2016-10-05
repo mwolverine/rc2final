@@ -24,9 +24,7 @@ class CompareViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var friendSteps: UILabel!
     @IBOutlet weak var segmentedView: UISegmentedControl!
     @IBOutlet weak var lineChart: LineChartView!
-    @IBOutlet weak var pieChart: PieChartView!
    
-    @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,17 +39,15 @@ class CompareViewController: UIViewController, ChartViewDelegate {
         super.viewDidAppear(animated)
         personalName.layer.borderColor = UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1).CGColor
         personalName.layer.borderWidth = 1
-        personalName.layer.masksToBounds = true
         
         friendName.layer.borderColor = UIColor.yellowColor().CGColor
         friendName.layer.borderWidth = 1
-        friendName.layer.masksToBounds = true
-        self.segmentedView.layer.borderColor = UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1.0).CGColor
-        self.segmentedView.layer.borderWidth = 2
-
+        
+        segmentedView.layer.borderColor = UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1).CGColor
+        segmentedView.layer.borderWidth = 1
+        
         
         setChart(dates, miles1: miles, dates2: compDates, miles2: compMiles)
-        setPieChart(miles, oppMiles: compMiles)
     }
     
     func returnNumberForSegmentController(int: Int) -> Int {
@@ -119,18 +115,6 @@ class CompareViewController: UIViewController, ChartViewDelegate {
     @IBAction func segmentValueChanged(sender: AnyObject) {
         
         self.setChart(dates, miles1: miles, dates2: compDates, miles2: compMiles)
-        
-        //scroll view + segmented control
-        switch sender.selectedSegmentIndex {
-        case 0:
-            scrollView.setContentOffset(CGPoint(x: 0,y: 0), animated: true)
-        case 1:
-            scrollView.setContentOffset(CGPoint(x: 375, y: 0), animated: true)
-        default:
-            print(1234)
-        }
-        
-        
     }
 
     
@@ -212,32 +196,6 @@ class CompareViewController: UIViewController, ChartViewDelegate {
             }
             
         }
-    }
-    
-    func setPieChart(userMiles: [Double], oppMiles: [Double]) {
-        
-        for i in 0..<userMiles.count {
-            let dataEntry = ChartDataEntry(value: oppMiles[i], xIndex: i)
-            dataEntries1.append(dataEntry)
-        }
-        
-        let pieChartDataSet = PieChartDataSet(yVals: dataEntries1, label: "Units Sold")
-        let pieChartData = PieChartData(xVals: userMiles, dataSet: pieChartDataSet)
-        pieChart.data = pieChartData
-        
-        var colors: [UIColor] = []
-        
-        for _ in 0..<userMiles.count {
-            
-            let red = Double(arc4random_uniform(256))
-            let green = Double(arc4random_uniform(256))
-            let blue = Double(arc4random_uniform(256))
-            
-            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
-            colors.append(color)
-        }
-        
-        pieChartDataSet.colors = colors
     }
     
     func callPullUserData() {
