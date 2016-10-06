@@ -74,9 +74,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         }
         print("User logged in")
         
-        FacebookController.sharedController.facebookCredential()
+        FacebookController.sharedController.logInToFirebase { success, error in
+            if success {
+                self.performSegueWithIdentifier("userLoggedIn", sender: self)
+            } else {
+                // TODO: Show the error from logging in
+            }
+        }
         // segue goes here
-        self.performSegueWithIdentifier("userLoggedIn", sender: self)
     }
     
     
@@ -84,14 +89,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         print("User Logged Out")
     }
     
-    @IBAction func returnUserDataButtonTapped(sender: AnyObject) {
-        FacebookController.sharedController.facebookCredential()
-    }
-    
-    func signedIn() {
-        let viewController = self.storyboard!.instantiateViewControllerWithIdentifier("ProfileView") as UIViewController
-        self.presentViewController(viewController, animated: true, completion: nil)
-    }
+//    @IBAction func returnUserDataButtonTapped(sender: AnyObject) {
+//        FacebookController.sharedController.facebookCredential()
+//    }
+//    
+//    func signedIn() {
+//        let viewController = self.storyboard!.instantiateViewControllerWithIdentifier("ProfileView") as UIViewController
+//        self.presentViewController(viewController, animated: true, completion: nil)
+//    }
     
 //    override func prepareForSegueLogin (segue: UIStoryboardSegue, sender: AnyObject?) {
 //        if segue.identifier == "userLoggedIn" {

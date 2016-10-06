@@ -42,60 +42,64 @@
     
     //FIREBASE FACEBOOK: Integration with Firebase through authentication from Facebook
     
-    func facebookCredential() {
+    func logInToFirebase(completion: (Bool, ErrorType?) -> Void) {
         
         let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
         
         FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
             if let error = error {
                 print(error)
+                completion(false, error)
             } else {
                 
                 print("Firebase authenticated")
                 
                 //FIREBASE: Create a user in database with the same authentication UID
                 
-                FIRAuth.auth()?.addAuthStateDidChangeListener({ (auth, user) in
-                    
-                    if (user != nil) {
-                        
-                        guard let user = user else { return }
-                        guard let photoLink = user.photoURL else { return }
-                        let photoStringURL = photoLink.absoluteString
-                        
-                        let newUser = ["displayName": user.displayName! as String, "email": user.email! as String, "photoURL": photoStringURL as String]
-                        self.uid = user.uid as String
-                        let usersReference = self.firebaseURL.child("users/\(self.uid)")
-                        
-                        usersReference.updateChildValues(newUser) { (err, ref) in
-                            if err != nil {
-                                print(err)
-                                return
-                            }
-                            print("saved successful in firebase database")
-                        }
-                        
-                        self.returnMyData()
-                        self.returnFriendListData()
-                        self.pullUserData(nil)
-                        
-                        
-                        //commented out background delivery for testing
-                        
-                        
-                        HealthKitController.sharedController.authorizeHealthKit { (success, error) in
-                            if success {
-                                //                                HealthKitController.sharedController.enableBackgroundDelivery()
-                            }
-                            HealthKitController.sharedController.setLastDaysToZero()
-                            HealthKitController.sharedController.setupMilesCollectionStatisticQuery()
-                            HealthKitController.sharedController.setupStepsCollectionStatisticQuery()
-                        }
-                        
+                guard let user = user else { return }
+                guard let photoLink = user.photoURL else { return } // TODO: Remove this for users without photo in Facebook
+                let photoStringURL = photoLink.absoluteString
+                
+                /**************/
+                // TODO: Only do this when the information has changed
+                let newUser = ["displayName": user.displayName! as String, "email": user.email! as String, "photoURL": photoStringURL as String]
+                self.uid = user.uid as String
+                let usersReference = self.firebaseURL.child("users/\(self.uid)")
+                
+                usersReference.updateChildValues(newUser) { (err, ref) in
+                    if err != nil {
+                        print(err)
+                        return
                     }
-                })
+                    print("saved successful in firebase database")
+                }
+                /*************/
+                
+                self.returnMyData()
+                self.returnFriendListData()
+                self.pullUserData(nil)
+                
+                
+                //commented out background delivery for testing
+                
+                
+                HealthKitController.sharedController.authorizeHealthKit { (success, error) in
+                    if success {
+                        //                                HealthKitController.sharedController.enableBackgroundDelivery()
+                    }
+                    HealthKitController.sharedController.setLastDaysToZero()
+                    HealthKitController.sharedController.setupMilesCollectionStatisticQuery()
+                    HealthKitController.sharedController.setupStepsCollectionStatisticQuery()
+                }
+                
+                completion(true, nil)
             }
         }
+        
+        // TODO: Decide where this should live
+        FIRAuth.auth()?.addAuthStateDidChangeListener({ (auth, user) in
+            // TODO: Handle user getting logged out
+        })
     }
     
     // FACEBOOK returns data on current user
@@ -204,8 +208,8 @@
     // Creates session per day on FIR from app - MILES
     
     func createSessionMiles(miles: String, date: NSDate) {
-        let fireBaseID: String = "hssekYSouyWPqgbIQ4xYxMuSdK13"
-            //(FIRAuth.auth()?.currentUser?.uid)!
+//        let fireBaseID: String = "hssekYSouyWPqgbIQ4xYxMuSdK13"
+        guard let fireBaseID = FIRAuth.auth()?.currentUser?.uid else { return }
         //        print(fireBaseID)
         let formatter = NSDateFormatter()
         // look into mm/dd/yyyy without branches
@@ -250,8 +254,10 @@
     //**DATE IS TODAY
     
     func pullFriendsMilesData(completion: ()->Void) {
-        let fireBaseID: String = "hssekYSouyWPqgbIQ4xYxMuSdK13"
+//        let fireBaseID: String = "hssekYSouyWPqgbIQ4xYxMuSdK13"
             //(FIRAuth.auth()?.currentUser?.uid)!
+        guard let fireBaseID = FIRAuth.auth()?.currentUser?.uid else { return }
+
         
         //"UQRBpwDLs5a96JSfXZllYkjIvt23"
         //(FIRAuth.auth()?.currentUser?.uid)!
@@ -344,9 +350,10 @@
     // Added completion to make Profile load faster...
     
     func pullUserData(completion: (() -> Void)?) {
-        let fireBaseID: String = "hssekYSouyWPqgbIQ4xYxMuSdK13"
+//        let fireBaseID: String = "hssekYSouyWPqgbIQ4xYxMuSdK13"
             //(FIRAuth.auth()?.currentUser?.uid)!
-        
+        guard let fireBaseID = FIRAuth.auth()?.currentUser?.uid else { return }
+
         //"UQRBpwDLs5a96JSfXZllYkjIvt23"
         //            (FIRAuth.auth()?.currentUser?.uid)!
         let date = NSDate()
@@ -357,7 +364,7 @@
             guard let userFirstName = snapshot.value!["firstName"] as? String else { return }
             guard let userLastName = snapshot.value!["lastName"] as? String else { return }
             guard let userEmail = snapshot.value!["email"] as? String else { return }
-            guard let userGender = snapshot.value!["gender"] as? String else { return }
+            //guard let userGender = snapshot.value!["gender"] as? String else { return }
             guard let userPhotoURL = snapshot.value!["photoURL"] as? String else { return }
             guard let userFID = snapshot.value!["fID"] as? String else { return }
             
@@ -366,7 +373,7 @@
                 guard let userMiles = snapshot.value!["miles"] as? String else { return }
                 guard let userSteps = snapshot.value!["steps"] as? String else { return }
                 
-                let userData = User(userFirstName: userFirstName, userLastName: userLastName, userEmail: userEmail, userGender: userGender, userFID: userFID, userUID: fireBaseID, userPhotoURL: userPhotoURL, userMiles: userMiles, userSteps: userSteps)
+                let userData = User(userFirstName: userFirstName, userLastName: userLastName, userFID: userFID, userUID: fireBaseID, userEmail: userEmail, userPhotoURL: userPhotoURL, userMiles: userMiles, userSteps: userSteps)
                 print(userData.userFirstName)
                 self.userData = userData
                 if let completion = completion {
@@ -378,8 +385,10 @@
     
     // finds total miles and daily totals for the current user
     func queryMiles() {
-        let fireBaseID: String = "hssekYSouyWPqgbIQ4xYxMuSdK13"
+//        let fireBaseID: String = "hssekYSouyWPqgbIQ4xYxMuSdK13"
             //(FIRAuth.auth()?.currentUser?.uid)!
+        guard let fireBaseID = FIRAuth.auth()?.currentUser?.uid else { return }
+
         self.sessions = []
         var total = 0.00
         firebaseURL.child("session").child(fireBaseID).child("days").queryOrderedByChild("miles").observeEventType(.Value, withBlock: { (snapshot) in

@@ -12,9 +12,6 @@ import Charts
 class ProfileViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
-//    @IBAction func update(sender: AnyObject) {
-//        callPullUserData()
-//    }
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var firstNameLabel: UILabel!
@@ -61,6 +58,7 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.segmentedControl.layer.borderColor = UIColor(red: 247/255, green: 67/255, blue: 76/255, alpha: 1.0).CGColor
         self.segmentedControl.layer.borderWidth = 2
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
@@ -79,11 +77,11 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
 //        }
     }
     
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         FacebookController.sharedController.pullUserData {
             self.callPullUserData()
+
             self.setChart(self.dates,values: self.miles)
         }
     }

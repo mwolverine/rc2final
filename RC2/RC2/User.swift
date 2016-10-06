@@ -13,18 +13,18 @@ class User {
     let userFirstName: String
     let userLastName: String
     let userEmail: String
-    let userGender: String
+    //let userGender: String
     let userFID: String
     let userUID: String
     let userPhotoURL: String
     let userMiles: String
     let userSteps: String
     
-    init(userFirstName: String, userLastName: String, userEmail: String, userGender: String, userFID: String, userUID: String, userPhotoURL: String, userMiles: String, userSteps: String){
+    init(userFirstName: String, userLastName: String, userFID: String, userUID: String, userEmail: String, userPhotoURL: String, userMiles: String, userSteps: String){
         self.userFirstName = userFirstName
         self.userLastName = userLastName
         self.userEmail = userEmail
-        self.userGender = userGender
+        //self.userGender = userGender
         self.userFID = userFID
         self.userUID = userUID
         self.userPhotoURL = userPhotoURL
