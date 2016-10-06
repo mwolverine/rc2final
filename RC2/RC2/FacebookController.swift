@@ -349,7 +349,7 @@
     
     // Added completion to make Profile load faster...
     
-    func pullUserData(completion: (() -> Void)?) {
+    func pullUserData(completion: ((User?) -> Void)?) {
 //        let fireBaseID: String = "hssekYSouyWPqgbIQ4xYxMuSdK13"
             //(FIRAuth.auth()?.currentUser?.uid)!
         guard let fireBaseID = FIRAuth.auth()?.currentUser?.uid else { return }
@@ -375,9 +375,11 @@
                 
                 let userData = User(userFirstName: userFirstName, userLastName: userLastName, userFID: userFID, userUID: fireBaseID, userEmail: userEmail, userPhotoURL: userPhotoURL, userMiles: userMiles, userSteps: userSteps)
                 print(userData.userFirstName)
-                self.userData = userData
-                if let completion = completion {
-                    completion()
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.userData = userData
+                    if let completion = completion {
+                        completion(userData)
+                    }
                 }
             })
         })

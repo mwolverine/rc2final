@@ -77,9 +77,10 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
 //        }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        FacebookController.sharedController.pullUserData {
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        FacebookController.sharedController.pullUserData { user in
+            self.user = user
             self.callPullUserData()
 
             self.setChart(self.dates,values: self.miles)
@@ -130,33 +131,31 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
     }
     
     func callPullUserData() {
-        user = FacebookController.sharedController.userData
+//        user = FacebookController.sharedController.userData
         print(user?.userEmail)
     
-        if let user = user {
-            firstNameLabel.text = "Welcome \(user.userFirstName)"
-            //lastNameLabel.text = user?.userLastName
-            userMilesLabel.text = "Miles: \(user.userMiles)"
-            userStepsLabel.text = "Steps: \(user.userSteps)"
-            
-            let imageURL = user.userPhotoURL
-            if let imageURLString: NSURL = NSURL(string: imageURL) {
-                let task = NSURLSession.sharedSession().dataTaskWithURL(imageURLString) { (data, response, error) -> Void in
+        guard let user = user else { return }
+        firstNameLabel.text = "Welcome \(user.userFirstName)"
+        userMilesLabel.text = "Miles: \(user.userMiles)"
+        userStepsLabel.text = "Steps: \(user.userSteps)"
+        
+        let imageURL = user.userPhotoURL
+        if let imageURLString: NSURL = NSURL(string: imageURL) {
+            let task = NSURLSession.sharedSession().dataTaskWithURL(imageURLString) { (data, response, error) -> Void in
+                
+                if error != nil {
+                    print("thers an error in the log")
+                } else {
                     
-                    if error != nil {
-                        print("thers an error in the log")
-                    } else {
-                        
-                        dispatch_async(dispatch_get_main_queue()) {
-                            let image = UIImage(data: data!)
-                            self.profileImageView.image = image
-                        }
+                    dispatch_async(dispatch_get_main_queue()) {
+                        let image = UIImage(data: data!)
+                        self.profileImageView.image = image
                     }
                 }
-                
-                task.resume()
-                
             }
+            
+            task.resume()
+            
         }
     }
     
